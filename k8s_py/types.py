@@ -56,3 +56,9 @@ class PodSpec(BaseModel):
 
 class PodStatus(BaseModel):
     pass
+
+class ReplicaSetSpec(BaseModel):
+    pass
+
+class ReplicaSetStatus(BaseModel):
+    pass
