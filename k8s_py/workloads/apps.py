@@ -1,7 +1,17 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
-from k8s_py.types import DaemonSetSpec, DaemonSetStatus, ObjectMeta, DeploymentSpec, DeploymentStatus, ReplicaSetSpec, ReplicaSetStatus
+from k8s_py.types import (
+    DaemonSetSpec,
+    DaemonSetStatus,
+    ObjectMeta,
+    DeploymentSpec,
+    DeploymentStatus,
+    ReplicaSetSpec,
+    ReplicaSetStatus,
+    StatefulSetSpec,
+    StatefulSetStatus,
+)
 
 class DaemonSet(BaseModel):
     apiVersion: str = Field(default="apps/v1", description="APIVersion defines the versioned schema of this representation of an object.")
@@ -23,3 +33,10 @@ class ReplicaSet(BaseModel):
     metadata: ObjectMeta = Field(default=None, description="Standard object's metadata.")
     spec: ReplicaSetSpec = Field(..., description="Specification of the desired behavior of the ReplicaSet.")
     status: Optional[ReplicaSetStatus] = Field(default=None, description="Most recently observed status of the ReplicaSet.")
+
+class StatefulSet(BaseModel):
+    apiVersion: str = Field(default="apps/v1", description="APIVersion defines the versioned schema of this representation of an object.")
+    kind: str = Field(default="StatefulSet", description="Kind is a string value representing the REST resource this object represents.")
+    metadata: ObjectMeta = Field(default=None, description="Standard object's metadata.")
+    spec: StatefulSetSpec = Field(..., description="Specification of the desired behavior of the stateful set.")
+    status: Optional[StatefulSetStatus] = Field(default=None, description="Most recently observed status of the stateful set.")

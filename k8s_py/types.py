@@ -68,3 +68,9 @@ class ReplicationControllerSpec(BaseModel):
 
 class ReplicationControllerStatus(BaseModel):
     pass
+
+class StatefulSetSpec(BaseModel):
+    pass
+
+class StatefulSetStatus(BaseModel):
+    pass
