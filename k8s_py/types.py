@@ -38,3 +38,9 @@ class JobTemplateSpec(BaseModel):
 
 class ObjectMeta(BaseModel):
     pass
+
+class DeploymentSpec(BaseModel):
+    pass
+
+class DeploymentStatus(BaseModel):
+    pass
