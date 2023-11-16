@@ -26,3 +26,15 @@ class VolumeDevice(BaseModel):
 
 class VolumeMount(BaseModel):
     pass
+
+class DaemonSetSpec(BaseModel):
+    pass
+
+class DaemonSetStatus(BaseModel):
+    pass
+
+class JobTemplateSpec(BaseModel):
+    pass
+
+class ObjectMeta(BaseModel):
+    pass
