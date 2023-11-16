@@ -44,3 +44,9 @@ class DeploymentSpec(BaseModel):
 
 class DeploymentStatus(BaseModel):
     pass
+
+class JobSpec(BaseModel):
+    pass
+
+class JobStatus(BaseModel):
+    pass
