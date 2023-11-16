@@ -1,6 +1,8 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field
 
-from k8s_py.types import EnvVar, EnvFromSource, Lifecycle, Probe, ContainerPort, ResourceRequirements, SecurityContext, VolumeDevice, VolumeMount
+from k8s_py.types import EnvVar, EnvFromSource, Lifecycle, Probe, ContainerPort, ResourceRequirements, SecurityContext, VolumeDevice, VolumeMount, ObjectMeta, PodSpec, PodStatus
 
 
 class Container(BaseModel):
@@ -26,3 +28,11 @@ class Container(BaseModel):
     volumeDevices: list[VolumeDevice] = Field(default=[], description="volumeDevices is the list of block devices to be used by the container.")
     volumeMounts: list[VolumeMount] = Field(default=[], description="Pod volumes to mount into the container's filesystem. Cannot be updated.")
     workingDir: str = Field(default=None, description="Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.")
+
+
+class Pod(BaseModel):
+    apiVersion: str = Field(default="v1", description="APIVersion defines the versioned schema of this representation of an object.")
+    kind: str = Field(default="Pod", description="Kind is a string value representing the REST resource this object represents.")
+    metadata: ObjectMeta = Field(default=None, description="Standard object's metadata.")
+    spec: PodSpec = Field(..., description="Specification of the desired behavior of the pod.")
+    status: Optional[PodStatus] = Field(default=None, description="Current status of the pod. Read-only.")

@@ -50,3 +50,9 @@ class JobSpec(BaseModel):
 
 class JobStatus(BaseModel):
     pass
+
+class PodSpec(BaseModel):
+    pass
+
+class PodStatus(BaseModel):
+    pass
