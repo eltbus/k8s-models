@@ -2,7 +2,22 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from k8s_py.types import EnvVar, EnvFromSource, Lifecycle, Probe, ContainerPort, ResourceRequirements, SecurityContext, VolumeDevice, VolumeMount, ObjectMeta, PodSpec, PodStatus
+from k8s_py.types import (
+    EnvVar,
+    EnvFromSource,
+    Lifecycle,
+    Probe,
+    ContainerPort,
+    ResourceRequirements,
+    SecurityContext, 
+    VolumeDevice, 
+    VolumeMount,
+    ObjectMeta,
+    PodSpec,
+    PodStatus,
+    ReplicationControllerSpec,
+    ReplicationControllerStatus
+)
 
 
 class Container(BaseModel):
@@ -36,3 +51,10 @@ class Pod(BaseModel):
     metadata: ObjectMeta = Field(default=None, description="Standard object's metadata.")
     spec: PodSpec = Field(..., description="Specification of the desired behavior of the pod.")
     status: Optional[PodStatus] = Field(default=None, description="Current status of the pod. Read-only.")
+
+class ReplicationController(BaseModel):
+    apiVersion: str = Field(default="v1", description="APIVersion defines the versioned schema of this representation of an object.")
+    kind: str = Field(default="ReplicationController", description="Kind is a string value representing the REST resource this object represents.")
+    metadata: ObjectMeta = Field(default=None, description="Standard object's metadata.")
+    spec: ReplicationControllerSpec = Field(..., description="Specification of the desired behavior of the replication controller.")
+    status: Optional[ReplicationControllerStatus] = Field(default=None, description="Most recently observed status of the replication controller.")

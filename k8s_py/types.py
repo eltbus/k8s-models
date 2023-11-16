@@ -62,3 +62,9 @@ class ReplicaSetSpec(BaseModel):
 
 class ReplicaSetStatus(BaseModel):
     pass
+
+class ReplicationControllerSpec(BaseModel):
+    pass
+
+class ReplicationControllerStatus(BaseModel):
+    pass
