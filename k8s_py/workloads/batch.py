@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from k8s_py.types import JobTemplateSpec, ObjectMeta, JobSpec, JobStatus
+from k8s_py.definitions.core import JobTemplateSpec, ObjectMeta, JobSpec, JobStatus
 
 # Pydantic model for CronJob
 class CronJob(BaseModel):

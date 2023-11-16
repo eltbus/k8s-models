@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
-from k8s_py.types import (
+from k8s_py.definitions.core import (
     DaemonSetSpec,
     DaemonSetStatus,
     ObjectMeta,

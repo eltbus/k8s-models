@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from k8s_py.types import (
+from k8s_py.definitions.core import (
     EnvVar,
     EnvFromSource,
     Lifecycle,
