@@ -1,0 +1,28 @@
+from pydantic import BaseModel
+
+class EnvVar(BaseModel):
+    pass
+
+class EnvFromSource(BaseModel):
+    pass
+
+class Lifecycle(BaseModel):
+    pass
+
+class Probe(BaseModel):
+    pass
+
+class ContainerPort(BaseModel):
+    pass
+
+class ResourceRequirements(BaseModel):
+    pass
+
+class SecurityContext(BaseModel):
+    pass
+
+class VolumeDevice(BaseModel):
+    pass
+
+class VolumeMount(BaseModel):
+    pass
