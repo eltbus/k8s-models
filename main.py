@@ -57,9 +57,27 @@ def gen_definition_tags(soup: BeautifulSoup) -> Iterator[Tag]:
             yield tag
 
 @dataclass
+class Parameter:
+    name: str
+    kind: str
+    description: str
+
+    @classmethod
+    def from_tr_tag(cls, tag: Tag):
+        if isinstance(tag, Tag):
+            col_tags = tag.find_all('td')
+            name_tag = col_tags[0].find('code')
+            name = name_tag.get_text() if isinstance(name_tag, Tag) and name_tag is not None else ""
+            kind_tag = col_tags[0].find('i')
+            kind = kind_tag.get_text() if isinstance(kind_tag, Tag) and kind_tag is not None else ""
+            description = col_tags[1].get_text().strip()
+        return cls(name=name, kind=kind, description=description)
+
+@dataclass
 class Resource:
     kind: str
     group: str
+    parameters: List[Parameter] = field(default_factory=list)
 
     @classmethod
     def from_resource_container_tag(cls, tag: Tag):
@@ -74,7 +92,12 @@ class Resource:
     def from_inline_definition_container_tag(cls, tag: Tag):
         kind_group_tag =  tag.find(is_inline_definition_h3)
         kind, _, group = kind_group_tag.get_text().split(" ") if isinstance(kind_group_tag, Tag) and kind_group_tag is not None else ""
-        return cls(kind=kind, group=group)
+        table_tag = tag.find("tbody")
+        parameters = []
+        if isinstance(table_tag, Tag):
+            for row_tag in table_tag.find_all("tr"):
+                parameters.append(Parameter.from_tr_tag(row_tag))
+        return cls(kind=kind, group=group, parameters=parameters)
 
 @dataclass
 class API:
@@ -124,13 +147,23 @@ def gen_apis_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[API]:
     for api in apis:
         yield api
 
+def gen_resources_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource]:
+    for api in gen_apis_from_kubernetes_docs(soup):
+        for resource in api.resources:
+            yield resource
+
 if __name__ == "__main__":
     with open("v1.28.html", "r") as f:
         html_doc = f.read()
 
     soup = BeautifulSoup(html_doc, 'html.parser')
-    for api in gen_apis_from_kubernetes_docs(soup):
-        print(api.name)
-        for resource in api.resources:
-            print(f"\t - {resource.kind}")
-        print("=" * 120)
+
+    # for api in gen_apis_from_kubernetes_docs(soup):
+    #     print(api.name)
+    #     for resource in api.resources:
+    #         print(f"\t - {resource.kind}")
+    #     print("=" * 120)
+
+    for resource in gen_resources_from_kubernetes_docs(soup):
+        print(resource)
+        pass
