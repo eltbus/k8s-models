@@ -34,25 +34,50 @@ class Parameter: # Technically could be named Field
     name: str
     description: str
 
+    @classmethod
+    def from_tag(cls, tag: Tag):
+        pass
+
 @dataclass
 class Resource:
     name: str
     group: str
     description: str
-    fields: Optional[List[Parameter]] = None
+    parameters: Optional[List[Parameter]] = None
 
     @classmethod
     def from_tag(cls, tag: Tag):
         name_tag =  tag.find("h1")
         name = name_tag.get_text() if isinstance(name_tag, Tag) and name_tag is not None else ""
+
         group_class = name_tag.get("g") if isinstance(name_tag, Tag) and name_tag is not None else ""
         group = group_class if isinstance(group_class, str) else ""
 
         description_tag = tag.find("p")
         description = description_tag.get_text().replace("\n", " ") if isinstance(description_tag, Tag) and description_tag is not None else ""
 
-        description_tag = tag.find("p")
-        description = description_tag.get_text().replace("\n", " ") if isinstance(description_tag, Tag) and description_tag is not None else ""
+        parameters = []
+
+        while (next_element := tag.find_next_sibling(is_api_or_resource_or_definition_or_deprecated_section)) is not None:
+            if not isinstance(next_element, Tag):
+                break
+            tag = next_element
+
+            if is_resource_container_section(tag):
+                parameters.append(Parameter.from_tag(tag))
+                continue
+
+            if is_definition_container_section(tag):
+                name_tag =  tag.find("h2")
+                name = name_tag.get_text() if name_tag is not None else ""
+                print(f"\t - {name}")
+
+            if is_api_section(tag) or is_definition_section(tag):
+                break
+
+            if is_deprecated_section(tag):
+                break
+
         return cls(name=name, description=description, group=group)
 
 @dataclass
@@ -104,10 +129,4 @@ if __name__ == "__main__":
         html_doc = f.read()
 
     soup = BeautifulSoup(html_doc, 'html.parser')
-    apis_generator = gen_apis_from_kubernetes_docs(soup)
-
-    result = next(apis_generator)
-    print(result)
-    print("-" * 80)
-    result = next(apis_generator)
-    print(result)
+    print(next(gen_apis_from_kubernetes_docs(soup)))
