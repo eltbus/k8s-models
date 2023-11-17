@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "k8s-py"
+version = "0.1.0"
+description = ""
+authors = ["eltbus <33374178+eltbus@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.5.1"
+beautifulsoup4 = "^4.12.2"
+lxml = "^4.9.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
