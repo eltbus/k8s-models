@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup, Tag
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Optional, Iterator
 
 def is_api_section(element):
@@ -60,7 +60,6 @@ class API:
     name: str
     description: str
     resources: Optional[List[Resource]] = None
-    next_api_tag: Optional[Tag] = field(default=None, repr=False)
 
     @classmethod
     def from_tag(cls, tag: Tag):
@@ -75,8 +74,7 @@ class API:
         while (next_element := tag.find_next_sibling(is_api_or_resource_or_definition_or_deprecated_section)) is not None:
             if not isinstance(next_element, Tag):
                 break
-            else:
-                tag = next_element
+            tag = next_element
 
             if is_resource_container_section(tag):
                 resources.append(Resource.from_tag(tag))
@@ -88,13 +86,12 @@ class API:
                 print(f"\t - {name}")
 
             if is_api_section(tag) or is_definition_section(tag):
-                print("Follow this tag")
                 break
 
             if is_deprecated_section(tag):
                 break
 
-        return cls(name=name, description=description, resources=resources, next_api_tag=tag)
+        return cls(name=name, description=description, resources=resources)
 
 def gen_apis_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[API]:
     api_tags = soup.find_all("div", attrs={"id": lambda x: x and x.endswith("-apis")})
@@ -109,5 +106,8 @@ if __name__ == "__main__":
     soup = BeautifulSoup(html_doc, 'html.parser')
     apis_generator = gen_apis_from_kubernetes_docs(soup)
 
+    result = next(apis_generator)
+    print(result)
+    print("-" * 80)
     result = next(apis_generator)
     print(result)
