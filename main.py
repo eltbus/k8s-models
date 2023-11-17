@@ -129,6 +129,8 @@ if __name__ == "__main__":
         html_doc = f.read()
 
     soup = BeautifulSoup(html_doc, 'html.parser')
-    result = next(gen_apis_from_kubernetes_docs(soup))
-    for i in result.resources:
-        print(i)
+    for api in gen_apis_from_kubernetes_docs(soup):
+        print(api.name)
+        for resource in api.resources:
+            print(f"\t - {resource.kind}")
+        print("=" * 120)
