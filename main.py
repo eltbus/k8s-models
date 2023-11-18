@@ -1,7 +1,7 @@
 from typing import Iterator
-from dataclasses import dataclass, field
 from bs4 import BeautifulSoup, Tag
 from typing import List, Iterator
+from pydantic import BaseModel, Field
 
 def is_apis_div(element) -> bool:
     return element.name == 'div' and element.get('id', '').endswith("-apis")
@@ -59,8 +59,7 @@ def gen_definition_tags(soup: BeautifulSoup) -> Iterator[Tag]:
         if isinstance(tag, Tag):
             yield tag
 
-@dataclass
-class Parameter:
+class Parameter(BaseModel):
     name: str
     kind: str
     description: str
@@ -76,11 +75,10 @@ class Parameter:
             description = col_tags[1].get_text().strip()
         return cls(name=name, kind=kind, description=description)
 
-@dataclass
-class Resource:
+class Resource(BaseModel):
     kind: str
     group: str
-    parameters: List[Parameter] = field(default_factory=list)
+    parameters: List[Parameter] = Field(default_factory=list)
 
     @classmethod
     def from_resource_container_tag(cls, tag: Tag):
@@ -110,11 +108,10 @@ class Resource:
                 parameters.append(Parameter.from_tr_tag(row_tag))
         return cls(kind=kind, group=group, parameters=parameters)
 
-@dataclass
-class API:
+class API(BaseModel):
     name: str
     description: str
-    resources: List = field(default_factory=list)
+    resources: List = Field(default_factory=list)
 
     @classmethod
     def from_api_tag(cls, tag: Tag):
@@ -174,8 +171,7 @@ if __name__ == "__main__":
         for resource in api.resources:
             print(f"\t - {resource.kind}")
             for param in resource.parameters:
-                print(f"\t\t - {param.name}")
-                break
+                print(f"\t\t - {param.name}: {param.description[:20]}...")
         print("=" * 120)
 
     # for resource in gen_resources_from_kubernetes_docs(soup):
