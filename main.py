@@ -9,27 +9,34 @@ from pydantic import BaseModel, Field
 def is_apis_div(element) -> bool:
     return element.name == 'div' and element.get('id', '').endswith("-apis")
 
+
 def is_definition_div(element) -> bool:
     return element.name == 'div' and element.get('id') == "definitions"
+
 
 def is_deprecated_div(element) -> bool:
     return element.name == 'div' and element.get('id') == "old-api-versions"
 
+
 def is_resource_container_div(element) -> bool:
     return element.name == 'div' and 'resource-container' in element.get('class', [])
 
-"definition-container"
+
 def is_params_table(element) -> bool:
     return element.name == 'table' and 'col-md-8' not in element.get('class', [])
+
 
 def is_inline_definition_container_div(element) -> bool:
     return element.name == 'div' and 'inline-definitions-container' in element.get('class', [])
 
+
 def is_inline_definition_h3(element) -> bool:
     return element.name == 'h3' and 'inline-definition' in element.get('class', [])
 
+
 def is_definition_container_div(element) -> bool:
     return element.name == 'div' and 'definition-container' in element.get('class', [])
+
 
 def is_api_div(element) -> bool:
     return (
@@ -38,6 +45,7 @@ def is_api_div(element) -> bool:
         or is_deprecated_div(element)
     )
 
+
 def is_resource_div(element) -> bool:
     return (
         is_resource_container_div(element)
@@ -45,11 +53,13 @@ def is_resource_div(element) -> bool:
         or is_definition_container_div(element)
     )
 
+
 def is_handled_div(element) -> bool:
     return (
         is_api_div(element)
         or is_resource_div(element)
     )
+
 
 def gen_api_tags(soup: BeautifulSoup) -> Iterator[Tag]:
     "There can be multiple api tags"
@@ -57,11 +67,13 @@ def gen_api_tags(soup: BeautifulSoup) -> Iterator[Tag]:
         if isinstance(tag, Tag):
             yield tag
 
+
 def gen_definition_tags(soup: BeautifulSoup) -> Iterator[Tag]:
     "There should be only ONE definition tag"
     for tag in soup.find_all(lambda element: is_definition_div(element)):
         if isinstance(tag, Tag):
             yield tag
+
 
 def map_kind_to_type(kind: str) -> str:
     match kind:
@@ -81,6 +93,7 @@ def map_kind_to_type(kind: str) -> str:
             return "Any"
         case _:
             return kind
+
 
 class Parameter(BaseModel):
     name: str
@@ -144,6 +157,7 @@ class Resource(BaseModel):
         body = "\n".join(fields_with_indentation)
         return head + body
 
+
 class API(BaseModel):
     name: str
     description: str
@@ -185,11 +199,13 @@ class API(BaseModel):
 
         return cls(name=name, description=description, resources=resources)
 
+
 def gen_apis_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[API]:
     api_tags = soup.find_all("div", attrs={"id": lambda x: x and x.endswith("-apis")})
     apis = map(lambda x: API.from_api_tag(x), api_tags)
     for api in apis:
         yield api
+
 
 def gen_definitions_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource]:
     definition_tags = soup.find_all(is_definition_container_div)
@@ -197,10 +213,12 @@ def gen_definitions_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resour
     for definition in definitions:
         yield definition
 
+
 def gen_resources_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource]:
     for api in gen_apis_from_kubernetes_docs(soup):
         for resource in api.resources:
             yield resource
+
 
 def main():
     with open("v1.28.html", "r") as f:
