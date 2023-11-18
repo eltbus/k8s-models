@@ -63,6 +63,25 @@ def gen_definition_tags(soup: BeautifulSoup) -> Iterator[Tag]:
         if isinstance(tag, Tag):
             yield tag
 
+def map_kind_to_type(kind: str) -> str:
+    match kind:
+        case "array":
+            return "List" 
+        case "boolean":
+            return "bool"
+        case "integer":
+            return "int"
+        case "number":
+            return "float"
+        case "object":
+            return "dict"
+        case "string":
+            return "str" 
+        case "":
+            return "Any"
+        case _:
+            return kind
+
 class Parameter(BaseModel):
     name: str
     kind: str
@@ -78,6 +97,7 @@ class Parameter(BaseModel):
             kind = kind_tag.get_text() if isinstance(kind_tag, Tag) and kind_tag is not None else ""
             description = col_tags[1].get_text().strip()
         return cls(name=name, kind=kind, description=description)
+    
 
 class Resource(BaseModel):
     kind: str
@@ -100,6 +120,15 @@ class Resource(BaseModel):
                 for row_tag in tbody_tag.find_all("tr"):
                     parameters.append(Parameter.from_tr_tag(row_tag))
         return cls(kind=kind, group=group, parameters=parameters)
+
+    def generate_path(self):
+        return f"{self.group}.py"
+
+    def generate_as_text(self):
+        # head = "class {self.kind}(BaseModel):"
+        # body = ""
+        return None
+
 
     @classmethod
     def from_inline_definition_container_tag(cls, tag: Tag) -> Resource:
@@ -184,9 +213,11 @@ def main():
     #             print(f"\t\t - {param.name}: {param.description[:20]}...")
     #     print("=" * 120)
     for definition in gen_definitions_from_kubernetes_docs(soup):
-        print(f"{definition.kind}")
+        print(definition.kind)
         for param in definition.parameters:
-            print(f"\t- {param.name}")
+            parts = [map_kind_to_type(param) for param in param.kind.split(" ")]
+            result = f"{parts[1]}[{parts[0]}]" if len(parts) == 2 else parts[0]
+            print(f"\t{result}")
 
 if __name__ == "__main__":
     root = Path(__file__).parent / "k8s_py"
