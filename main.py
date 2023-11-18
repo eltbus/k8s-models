@@ -112,9 +112,9 @@ class Parameter(BaseModel):
         return cls(name=name, kind=kind, description=description)
 
     def repr_as_pydantic_field(self):
-        parts = [map_kind_to_type(self) for self in self.kind.split(" ")]
-        field_type = f"{parts[1]}[{parts[0]}]" if len(parts) == 2 else parts[0]
-        return f"{self.name}: {field_type} = Field(default=None, description={self.description})"
+        parts = [map_kind_to_type(self) for self in self.kind.split(' ')]
+        field_type = f'{parts[1]}[{parts[0]}]' if len(parts) == 2 else parts[0]
+        return f'{self.name}: {field_type} = Field(default=None, description="{self.description}")'
     
 
 class Resource(BaseModel):
@@ -156,6 +156,23 @@ class Resource(BaseModel):
         fields_with_indentation = ["\t" + field for field in fields]
         body = "\n".join(fields_with_indentation)
         return head + body
+
+    def create_file(self, root: Path, block_name: str):
+        block_path = root / block_name
+        module_name = self.group.replace(".", "_")
+        path = block_path / f"{module_name}.py"
+        if not path.parent.exists():
+            path.parent.mkdir(parents=True, exist_ok=True)
+        if not path.exists():
+            path.touch(exist_ok=True)
+        return path
+
+    def add_to_file(self, root: Path, block_name: str):
+        path = self.create_file(root=root, block_name=block_name)
+        with open(path, "a") as f:
+            f.write("\n")
+            f.write(self.repr_as_pydantic_model())
+            f.write("\n")
 
 
 class API(BaseModel):
@@ -219,7 +236,6 @@ def gen_resources_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource
         for resource in api.resources:
             yield resource
 
-
 def main():
     with open("v1.28.html", "r") as f:
         html_doc = f.read()
@@ -233,10 +249,17 @@ def main():
     #         for param in resource.parameters:
     #             print(f"\t\t - {param.name}: {param.description[:20]}...")
     #     print("=" * 120)
+
+    # Definitions
+    root = Path(__file__).parent / "k8s_py"
+
+    root = Path(__file__).parent / "k8s_py"
+    for api in gen_apis_from_kubernetes_docs(soup):
+        for resource in api.resources:
+           resource.add_to_file(root=root, block_name=api.name)
+
     for definition in gen_definitions_from_kubernetes_docs(soup):
-        print(definition.repr_as_pydantic_model())
-        break
+        definition.add_to_file(root=root, block_name="Definitions")
 
 if __name__ == "__main__":
-    root = Path(__file__).parent / "k8s_py"
     main()
