@@ -1,6 +1,7 @@
-from typing import Iterator
-from bs4 import BeautifulSoup, Tag
+from pathlib import Path
 from typing import List, Iterator
+
+from bs4 import BeautifulSoup, Tag
 from pydantic import BaseModel, Field
 
 def is_apis_div(element) -> bool:
@@ -160,7 +161,7 @@ def gen_resources_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource
         for resource in api.resources:
             yield resource
 
-if __name__ == "__main__":
+def main():
     with open("v1.28.html", "r") as f:
         html_doc = f.read()
 
@@ -174,6 +175,5 @@ if __name__ == "__main__":
                 print(f"\t\t - {param.name}: {param.description[:20]}...")
         print("=" * 120)
 
-    # for resource in gen_resources_from_kubernetes_docs(soup):
-    #     print(resource)
-    #     pass
+if __name__ == "__main__":
+    print(Path(__file__).parent)
