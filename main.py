@@ -157,18 +157,20 @@ class Resource(BaseModel):
         body = "\n".join(fields_with_indentation)
         return head + body
 
-    def create_file(self, root: Path, block_name: str):
-        block_path = root / block_name
-        module_name = self.group.replace(".", "_")
-        path = block_path / f"{module_name}.py"
+    def create_module(self, root: Path, module_name: str):
+        module_path = root / module_name
+        submodule_name = self.group.replace(".", "_")
+        path = module_path / f"{submodule_name}.py"
         if not path.parent.exists():
             path.parent.mkdir(parents=True, exist_ok=True)
         if not path.exists():
             path.touch(exist_ok=True)
+        module_init_file_path = module_path / "__init__.py"
+        module_init_file_path.touch(exist_ok=True)
         return path
 
-    def add_to_file(self, root: Path, block_name: str):
-        path = self.create_file(root=root, block_name=block_name)
+    def add_to_module(self, root: Path, module_name: str):
+        path = self.create_module(root=root, module_name=module_name)
         with open(path, "a") as f:
             f.write("\n")
             f.write(self.repr_as_pydantic_model())
@@ -216,6 +218,15 @@ class API(BaseModel):
 
         return cls(name=name, description=description, resources=resources)
 
+    @property
+    def module_name(self):
+        return (
+            self.name
+            .lower()
+            .replace(" ", "_")
+            .replace("&", "and")
+        )
+
 
 def gen_apis_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[API]:
     api_tags = soup.find_all("div", attrs={"id": lambda x: x and x.endswith("-apis")})
@@ -251,15 +262,16 @@ def main():
     #     print("=" * 120)
 
     # Definitions
-    root = Path(__file__).parent / "k8s_py"
 
     root = Path(__file__).parent / "k8s_py"
+    package_init_file_path = root / "__init__.py"
+    package_init_file_path.touch(exist_ok=True)
     for api in gen_apis_from_kubernetes_docs(soup):
         for resource in api.resources:
-           resource.add_to_file(root=root, block_name=api.name)
+            resource.add_to_module(root=root, module_name=api.module_name)
 
     for definition in gen_definitions_from_kubernetes_docs(soup):
-        definition.add_to_file(root=root, block_name="Definitions")
+        definition.add_to_module(root=root, module_name="definitions")
 
 if __name__ == "__main__":
     main()
