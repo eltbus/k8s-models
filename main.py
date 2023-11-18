@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 from typing import List, Iterator
 
@@ -16,6 +18,7 @@ def is_deprecated_div(element) -> bool:
 def is_resource_container_div(element) -> bool:
     return element.name == 'div' and 'resource-container' in element.get('class', [])
 
+"definition-container"
 def is_params_table(element) -> bool:
     return element.name == 'table' and 'col-md-8' not in element.get('class', [])
 
@@ -66,7 +69,7 @@ class Parameter(BaseModel):
     description: str
 
     @classmethod
-    def from_tr_tag(cls, tag: Tag):
+    def from_tr_tag(cls, tag: Tag) -> Parameter:
         if isinstance(tag, Tag):
             col_tags = tag.find_all('td')
             name_tag = col_tags[0].find('code')
@@ -82,7 +85,7 @@ class Resource(BaseModel):
     parameters: List[Parameter] = Field(default_factory=list)
 
     @classmethod
-    def from_resource_container_tag(cls, tag: Tag):
+    def from_resource_container_tag(cls, tag: Tag) -> Resource:
         kind_tag =  tag.find('span', class_='k')
         kind = kind_tag.get_text() if isinstance(kind_tag, Tag) and kind_tag is not None else ""
 
@@ -96,10 +99,10 @@ class Resource(BaseModel):
             if isinstance(tbody_tag, Tag):
                 for row_tag in tbody_tag.find_all("tr"):
                     parameters.append(Parameter.from_tr_tag(row_tag))
-            return cls(kind=kind, group=group, parameters=parameters)
+        return cls(kind=kind, group=group, parameters=parameters)
 
     @classmethod
-    def from_inline_definition_container_tag(cls, tag: Tag):
+    def from_inline_definition_container_tag(cls, tag: Tag) -> Resource:
         kind_group_tag =  tag.find(is_inline_definition_h3)
         kind, _, group = kind_group_tag.get_text().split(" ") if isinstance(kind_group_tag, Tag) and kind_group_tag is not None else ""
         table_tag = tag.find("tbody")
@@ -115,7 +118,7 @@ class API(BaseModel):
     resources: List = Field(default_factory=list)
 
     @classmethod
-    def from_api_tag(cls, tag: Tag):
+    def from_api_tag(cls, tag: Tag) -> API:
         name_tag =  tag.find("h1")
         name = name_tag.get_text() if name_tag is not None else ""
 
@@ -156,6 +159,12 @@ def gen_apis_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[API]:
     for api in apis:
         yield api
 
+def gen_definitions_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource]:
+    definition_tags = soup.find_all(is_definition_container_div)
+    definitions = map(lambda x: Resource.from_resource_container_tag(x), definition_tags)
+    for definition in definitions:
+        yield definition
+
 def gen_resources_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource]:
     for api in gen_apis_from_kubernetes_docs(soup):
         for resource in api.resources:
@@ -167,13 +176,18 @@ def main():
 
     soup = BeautifulSoup(html_doc, 'html.parser')
 
-    for api in gen_apis_from_kubernetes_docs(soup):
-        print(api.name)
-        for resource in api.resources:
-            print(f"\t - {resource.kind}")
-            for param in resource.parameters:
-                print(f"\t\t - {param.name}: {param.description[:20]}...")
-        print("=" * 120)
+    # for api in gen_apis_from_kubernetes_docs(soup):
+    #     print(api.name)
+    #     for resource in api.resources:
+    #         print(f"\t - {resource.kind}")
+    #         for param in resource.parameters:
+    #             print(f"\t\t - {param.name}: {param.description[:20]}...")
+    #     print("=" * 120)
+    for definition in gen_definitions_from_kubernetes_docs(soup):
+        print(f"{definition.kind}")
+        for param in definition.parameters:
+            print(f"\t- {param.name}")
 
 if __name__ == "__main__":
-    print(Path(__file__).parent)
+    root = Path(__file__).parent / "k8s_py"
+    main()
