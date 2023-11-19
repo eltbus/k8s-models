@@ -114,7 +114,7 @@ class Parameter(BaseModel):
     def repr_as_pydantic_field(self):
         parts = [map_kind_to_type(self) for self in self.kind.split(' ')]
         field_type = f'{parts[1]}[{parts[0]}]' if len(parts) == 2 else parts[0]
-        return f'{self.name}: {field_type} = Field(default=None, description="{self.description}")'
+        return f'{self.name}: {field_type} = Field(default=None, description=r""" {self.description} """)'
     
 
 class Resource(BaseModel):
@@ -247,23 +247,26 @@ def gen_resources_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource
         for resource in api.resources:
             yield resource
 
-def main():
+def load_soup():
     with open("v1.28.html", "r") as f:
         html_doc = f.read()
+    return BeautifulSoup(html_doc, 'html.parser')
 
-    soup = BeautifulSoup(html_doc, 'html.parser')
+def test():
+    soup = load_soup()
+    for api in gen_apis_from_kubernetes_docs(soup):
+        print(api.name)
+        for resource in api.resources:
+            print(f"\t - {resource.kind}")
+        print("=" * 120)
 
-    # for api in gen_apis_from_kubernetes_docs(soup):
-    #     print(api.name)
-    #     for resource in api.resources:
-    #         print(f"\t - {resource.kind}")
-    #         for param in resource.parameters:
-    #             print(f"\t\t - {param.name}: {param.description[:20]}...")
-    #     print("=" * 120)
 
-    # Definitions
+
+def main():
+    soup = load_soup()
 
     root = Path(__file__).parent / "k8s_py"
+    root.mkdir(exist_ok=True)
     package_init_file_path = root / "__init__.py"
     package_init_file_path.touch(exist_ok=True)
     for api in gen_apis_from_kubernetes_docs(soup):
@@ -275,3 +278,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # test()
