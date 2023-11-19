@@ -61,6 +61,9 @@ class NodeStatus(BaseModel):
 class PersistentVolumeStatus(BaseModel):
     pass
 
+class PersistentVolumeClaimStatus(BaseModel):
+    pass
+
 class ResourceQuotaStatus(BaseModel):
     pass
 
@@ -71,4 +74,7 @@ class PriorityLevelConfigurationStatus(BaseModel):
     pass
 
 class StorageVersionStatus(BaseModel):
+    pass
+
+class VolumeAttachmentStatus(BaseModel):
     pass
