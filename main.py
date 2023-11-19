@@ -265,7 +265,7 @@ def test():
 def main():
     soup = load_soup()
 
-    root = Path(__file__).parent / "k8s_py"
+    root = Path(__file__).parent / "k8s_models"
     root.mkdir(exist_ok=True)
     package_init_file_path = root / "__init__.py"
     package_init_file_path.touch(exist_ok=True)

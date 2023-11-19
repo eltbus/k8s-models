@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "k8s-py"
+name = "k8s-models"
 version = "0.1.0"
 description = ""
 authors = ["eltbus <33374178+eltbus@users.noreply.github.com>"]

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from k8s_py.definitions.meta import MicroTime
+from k8s_models.definitions.meta import MicroTime
 
 
 class EventSeries(BaseModel):

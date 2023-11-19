@@ -2,8 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
-from k8s_py.cluster.core import PersistentVolumeSpec
-from k8s_py.definitions.meta import Time
+from k8s_models.cluster.core import PersistentVolumeSpec
+from k8s_models.definitions.meta import Time
 
 
 class CSINodeDriver(BaseModel):

@@ -2,8 +2,8 @@ from __future__ import annotations
 from typing import Any
 
 from pydantic import BaseModel, Field
-from k8s_py.definitions.meta import Time
-from k8s_py.definitions.unknown import RollingUpdateDaemonSet
+from k8s_models.definitions.meta import Time
+from k8s_models.definitions.unknown import RollingUpdateDaemonSet
 
 
 class DaemonSetCondition(BaseModel):

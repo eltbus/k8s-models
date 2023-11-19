@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
-from k8s_py.definitions.core import ObjectReference
+from k8s_models.definitions.core import ObjectReference
 
 
 class Endpoint(BaseModel):

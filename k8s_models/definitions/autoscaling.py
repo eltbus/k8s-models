@@ -2,9 +2,9 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
-from k8s_py.definitions.core import Quantity
-from k8s_py.definitions.meta import Time, LabelSelector, ObjectMeta
-from k8s_py.definitions.unknown import ScaleSpec, ScaleStatus
+from k8s_models.definitions.core import Quantity
+from k8s_models.definitions.meta import Time, LabelSelector, ObjectMeta
+from k8s_models.definitions.unknown import ScaleSpec, ScaleStatus
 
 
 class ContainerResourceMetricSource(BaseModel):

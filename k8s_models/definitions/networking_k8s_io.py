@@ -3,8 +3,8 @@ from typing import List, Any
 
 from pydantic import BaseModel, Field
 
-from k8s_py.definitions.core import TypedLocalObjectReference
-from k8s_py.definitions.meta import LabelSelector
+from k8s_models.definitions.core import TypedLocalObjectReference
+from k8s_models.definitions.meta import LabelSelector
 
 
 class HTTPIngressPath(BaseModel):

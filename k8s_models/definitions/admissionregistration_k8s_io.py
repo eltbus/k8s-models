@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
-from k8s_py.definitions.meta import LabelSelector
+from k8s_models.definitions.meta import LabelSelector
 
 
 class AuditAnnotation(BaseModel):

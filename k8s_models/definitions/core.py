@@ -2,8 +2,8 @@ from __future__ import annotations
 from typing import List, Any
 
 from pydantic import BaseModel, Field
-from k8s_py.definitions.meta import Time, ObjectMeta, LabelSelector
-from k8s_py.config_and_storage.core import PersistentVolumeClaimSpec
+from k8s_models.definitions.meta import Time, ObjectMeta, LabelSelector
+from k8s_models.config_and_storage.core import PersistentVolumeClaimSpec
 
 
 class AWSElasticBlockStoreVolumeSource(BaseModel):
