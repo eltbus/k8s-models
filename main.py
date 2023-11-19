@@ -119,6 +119,7 @@ class Parameter(BaseModel):
 
 class Resource(BaseModel):
     kind: str
+    version: str
     group: str
     parameters: List[Parameter] = Field(default_factory=list)
 
@@ -126,6 +127,9 @@ class Resource(BaseModel):
     def from_resource_container_tag(cls, tag: Tag) -> Resource:
         kind_tag =  tag.find('span', class_='k')
         kind = kind_tag.get_text() if isinstance(kind_tag, Tag) and kind_tag is not None else ""
+
+        version_tag =  tag.find('span', class_='v')
+        version = version_tag.get_text() if isinstance(version_tag, Tag) and version_tag is not None else ""
 
         group_tag =  tag.find('span', class_='g')
         group = group_tag.get_text() if isinstance(group_tag, Tag) and group_tag is not None else ""
@@ -137,18 +141,18 @@ class Resource(BaseModel):
             if isinstance(tbody_tag, Tag):
                 for row_tag in tbody_tag.find_all("tr"):
                     parameters.append(Parameter.from_tr_tag(row_tag))
-        return cls(kind=kind, group=group, parameters=parameters)
+        return cls(kind=kind, version=version, group=group, parameters=parameters)
 
     @classmethod
     def from_inline_definition_container_tag(cls, tag: Tag) -> Resource:
-        kind_group_tag =  tag.find(is_inline_definition_h3)
-        kind, _, group = kind_group_tag.get_text().split(" ") if isinstance(kind_group_tag, Tag) and kind_group_tag is not None else ""
+        kind_version_group_tag =  tag.find(is_inline_definition_h3)
+        kind, version, group = kind_version_group_tag.get_text().split(" ") if isinstance(kind_version_group_tag, Tag) and kind_version_group_tag is not None else ""
         table_tag = tag.find("tbody")
         parameters = []
         if isinstance(table_tag, Tag):
             for row_tag in table_tag.find_all("tr"):
                 parameters.append(Parameter.from_tr_tag(row_tag))
-        return cls(kind=kind, group=group, parameters=parameters)
+        return cls(kind=kind, version=version, group=group, parameters=parameters)
 
     def repr_as_pydantic_model(self) -> str:
         head = f"class {self.kind}(BaseModel):\n"
@@ -260,7 +264,21 @@ def test():
             print(f"\t - {resource.kind}")
         print("=" * 120)
 
+def show_versions():
+    soup = load_soup()
 
+    for api in gen_apis_from_kubernetes_docs(soup):
+        print(api.module_name)
+        for resource in api.resources:
+            for parameter in resource.parameters:
+                if parameter.name == "apiVersion":
+                    print(f"\t{resource.kind}, {resource.version}, {resource.group}")
+
+    print("definitions")
+    for definition in gen_definitions_from_kubernetes_docs(soup):
+        for parameter in definition.parameters:
+            if parameter.name == "apiVersion":
+                print(f"\t{definition.kind}, {definition.version}, {definition.group}")
 
 def main():
     soup = load_soup()
@@ -277,5 +295,6 @@ def main():
         definition.add_to_module(root=root, module_name="definitions")
 
 if __name__ == "__main__":
-    main()
+    # main()
     # test()
+    show_versions()
