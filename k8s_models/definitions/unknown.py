@@ -4,10 +4,8 @@ from pydantic import BaseModel
 class RollingUpdateDaemonSet(BaseModel):
     pass
 
-
 class ScaleSpec(BaseModel):
     pass
-
 
 class ScaleStatus(BaseModel):
     pass
@@ -37,4 +35,40 @@ class CronJobStatus(BaseModel):
     pass
 
 class JobStatus(BaseModel):
+    pass
+
+class APIServiceStatus(BaseModel):
+    pass
+
+class TokenRequestStatus(BaseModel):
+    pass
+
+class TokenReviewStatus(BaseModel):
+    pass
+
+class SubjectAccessReviewStatus(BaseModel):
+    pass
+
+class CertificateSigningRequestStatus(BaseModel):
+    pass
+
+class NamespaceStatus(BaseModel):
+    pass
+
+class NodeStatus(BaseModel):
+    pass
+
+class PersistentVolumeStatus(BaseModel):
+    pass
+
+class ResourceQuotaStatus(BaseModel):
+    pass
+
+class FlowSchemaStatus(BaseModel):
+    pass
+
+class PriorityLevelConfigurationStatus(BaseModel):
+    pass
+
+class StorageVersionStatus(BaseModel):
     pass
