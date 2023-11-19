@@ -96,3 +96,9 @@ class PodSchedulingContextStatus(BaseModel):
 
 class ResourceClaimStatus(BaseModel):
     pass
+
+class ServiceStatus(BaseModel):
+    pass
+
+class IngressStatus(BaseModel):
+    pass
