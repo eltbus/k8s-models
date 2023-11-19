@@ -78,3 +78,21 @@ class StorageVersionStatus(BaseModel):
 
 class VolumeAttachmentStatus(BaseModel):
     pass
+
+class ValidatingAdmissionPolicyStatus(BaseModel):
+    pass
+
+class CustomResourceDefinitionStatus(BaseModel):
+    pass
+
+class HorizontalPodAutoscalerStatus(BaseModel):
+    pass
+
+class PodDisruptionBudgetStatus(BaseModel):
+    pass
+
+class PodSchedulingContextStatus(BaseModel):
+    pass
+
+class ResourceClaimStatus(BaseModel):
+    pass
