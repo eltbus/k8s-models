@@ -6,11 +6,11 @@ from pydantic import BaseModel, Field
 
 class APIGroup(BaseModel):
     apiVersion: str = Field(
-        default=None,
+        default="v1",
         description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """,
     )
     kind: str = Field(
-        default=None,
+        default="APIGroup",
         description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """,
     )
     name: str = Field(default=None, description=r""" name is the name of the group. """)
@@ -72,11 +72,11 @@ class APIResource(BaseModel):
 
 class APIVersions(BaseModel):
     apiVersion: str = Field(
-        default=None,
+        default="v1",
         description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """,
     )
     kind: str = Field(
-        default=None,
+        default="APIVersions",
         description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """,
     )
     serverAddressByClientCIDRs: List[ServerAddressByClientCIDR] = Field(
@@ -118,7 +118,7 @@ class Condition(BaseModel):
 
 class DeleteOptions(BaseModel):
     apiVersion: str = Field(
-        default=None,
+        default="v1",
         description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """,
     )
     dryRun: List[str] = Field(
@@ -130,7 +130,7 @@ class DeleteOptions(BaseModel):
         description=r""" The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. """,
     )
     kind: str = Field(
-        default=None,
+        default="DeleteOptions",
         description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """,
     )
     orphanDependents: bool = Field(
