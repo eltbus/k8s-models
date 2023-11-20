@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List, Iterator
+from typing import List, Iterator, Optional
 
 from bs4 import BeautifulSoup, Tag
 from pydantic import BaseModel, Field
@@ -111,10 +111,15 @@ class Parameter(BaseModel):
             description = col_tags[1].get_text().strip()
         return cls(name=name, kind=kind, description=description)
 
-    def repr_as_pydantic_field(self):
+    def repr_as_pydantic_field(self, resource_kind: Optional[str] = None, resource_version: Optional[str] = None):
         parts = [map_kind_to_type(self) for self in self.kind.split(' ')]
         field_type = f'{parts[1]}[{parts[0]}]' if len(parts) == 2 else parts[0]
-        return f'{self.name}: {field_type} = Field(default=None, description=r""" {self.description} """)'
+        if self.name == "apiVersion":
+            return f'{self.name}: {field_type} = Field(default="{resource_version}", description=r""" {self.description} """)'
+        elif self.name == "kind":
+            return f'{self.name}: {field_type} = Field(default="{resource_kind}", description=r""" {self.description} """)'
+        else:
+            return f'{self.name}: {field_type} = Field(default=None, description=r""" {self.description} """)'
     
 
 class Resource(BaseModel):
@@ -156,7 +161,7 @@ class Resource(BaseModel):
 
     def repr_as_pydantic_model(self) -> str:
         head = f"class {self.kind}(BaseModel):\n"
-        fields = [parameter.repr_as_pydantic_field() for parameter in self.parameters]
+        fields = [parameter.repr_as_pydantic_field(resource_kind=self.kind, resource_version=self.version) for parameter in self.parameters]
         fields_with_indentation = ["\t" + field for field in fields]
         body = "\n".join(fields_with_indentation)
         return head + body
@@ -283,7 +288,7 @@ def show_versions():
 def main():
     soup = load_soup()
 
-    root = Path(__file__).parent / "k8s_models"
+    root = Path(__file__).parent / "k8s_models2"
     root.mkdir(exist_ok=True)
     package_init_file_path = root / "__init__.py"
     package_init_file_path.touch(exist_ok=True)
@@ -295,6 +300,6 @@ def main():
         definition.add_to_module(root=root, module_name="definitions")
 
 if __name__ == "__main__":
-    # main()
+    main()
     # test()
-    show_versions()
+    # show_versions()
