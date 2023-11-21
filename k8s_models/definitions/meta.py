@@ -3,7 +3,9 @@ from typing import List, Any
 
 from pydantic import BaseModel, Field
 
-class APIGroup(BaseModel):
+from k8s_models.models import KubeModel
+
+class APIGroup(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="APIGroup", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	name: str = Field(default=None, description=r""" name is the name of the group. """)
@@ -23,7 +25,7 @@ class APIResource(BaseModel):
 	verbs: List[str] = Field(default=None, description=r""" verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy) """)
 	version: str = Field(default=None, description=r""" version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)". """)
 
-class APIVersions(BaseModel):
+class APIVersions(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="APIVersions", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	serverAddressByClientCIDRs: List[ServerAddressByClientCIDR] = Field(default=None, description=r""" a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP. """)
@@ -37,7 +39,7 @@ class Condition(BaseModel):
 	status: str = Field(default=None, description=r""" status of the condition, one of True, False, Unknown. """)
 	type: str = Field(default=None, description=r""" type of condition in CamelCase or in foo.example.com/CamelCase. """)
 
-class DeleteOptions(BaseModel):
+class DeleteOptions(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	dryRun: List[str] = Field(default=None, description=r""" When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed """)
 	gracePeriodSeconds: int = Field(default=None, description=r""" The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. """)
@@ -69,7 +71,7 @@ class ListMeta(BaseModel):
 	resourceVersion: str = Field(default=None, description=r""" String that identifies the server's internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency """)
 	selfLink: str = Field(default=None, description=r""" Deprecated: selfLink is a legacy read-only field that is no longer populated by the system. """)
 
-class ManagedFieldsEntry(BaseModel):
+class ManagedFieldsEntry(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the version of this resource that this field set applies to. The format is "group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted. """)
 	fieldsType: str = Field(default=None, description=r""" FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: "FieldsV1" """)
 	fieldsV1: FieldsV1 = Field(default=None, description=r""" FieldsV1 holds the first JSON version format as described in the "FieldsV1" type. """)
@@ -99,7 +101,7 @@ class ObjectMeta(BaseModel):
 	selfLink: str = Field(default=None, description=r""" Deprecated: selfLink is a legacy read-only field that is no longer populated by the system. """)
 	uid: str = Field(default=None, description=r""" UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.  Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids """)
 
-class OwnerReference(BaseModel):
+class OwnerReference(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" API version of the referent. """)
 	blockOwnerDeletion: bool = Field(default=None, description=r""" If true, AND if the owner has the "foregroundDeletion" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs "delete" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned. """)
 	controller: bool = Field(default=None, description=r""" If true, this reference points to the managing controller. """)
@@ -119,7 +121,7 @@ class ServerAddressByClientCIDR(BaseModel):
 	clientCIDR: str = Field(default=None, description=r""" The CIDR with which clients can match their IP to figure out the server address that they should use. """)
 	serverAddress: str = Field(default=None, description=r""" Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port. """)
 
-class Status(BaseModel):
+class Status(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	code: int = Field(default=None, description=r""" Suggested HTTP return code for this status, 0 if not set. """)
 	details: StatusDetails = Field(default=None, description=r""" Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type. """)

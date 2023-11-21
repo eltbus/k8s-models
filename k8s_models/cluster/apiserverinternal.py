@@ -1,9 +1,9 @@
 from __future__ import annotations
-
 from typing import List
 
 from pydantic import BaseModel, Field
 
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ListMeta
 from k8s_models.definitions.internal_apiserver_k8s_io import StorageVersionCondition, ServerStorageVersion
 from k8s_models.cluster.internal_apiserver_k8s_io import StorageVersion
@@ -17,7 +17,7 @@ class StorageVersionStatus(BaseModel):
 	conditions: List[StorageVersionCondition] = Field(default=None, description=r""" The latest available observations of the storageVersion's state. """)
 	storageVersions: List[ServerStorageVersion] = Field(default=None, description=r""" The reported versions per API server instance. """)
 
-class StorageVersionList(BaseModel):
+class StorageVersionList(KubeModel):
 	apiVersion: str = Field(default="v1alpha1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[StorageVersion] = Field(default=None, description=r""" Items holds a list of StorageVersion """)
 	kind: str = Field(default="StorageVersionList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

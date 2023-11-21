@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ObjectMeta, Time, ListMeta
 from k8s_models.definitions.autoscaling import (
     CrossVersionObjectReference,
@@ -11,7 +13,7 @@ from k8s_models.definitions.autoscaling import (
     MetricStatus
 )
 
-class HorizontalPodAutoscaler(BaseModel):
+class HorizontalPodAutoscaler(KubeModel):
 	apiVersion: str = Field(default="v2", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="HorizontalPodAutoscaler", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" metadata is the standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
@@ -33,7 +35,7 @@ class HorizontalPodAutoscalerStatus(BaseModel):
 	lastScaleTime: Time = Field(default=None, description=r""" lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed. """)
 	observedGeneration: int = Field(default=None, description=r""" observedGeneration is the most recent generation observed by this autoscaler. """)
 
-class HorizontalPodAutoscalerList(BaseModel):
+class HorizontalPodAutoscalerList(KubeModel):
 	apiVersion: str = Field(default="v2", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[HorizontalPodAutoscaler] = Field(default=None, description=r""" items is the list of horizontal pod autoscaler objects. """)
 	kind: str = Field(default="HorizontalPodAutoscalerList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

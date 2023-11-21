@@ -2,7 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
-from k8s_models.definitions.meta import ObjectMeta, LabelSelector, ListMeta
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.core import (
     AWSElasticBlockStoreVolumeSource,
     AzureDiskVolumeSource,
@@ -38,8 +39,9 @@ from k8s_models.definitions.core import (
     TypedObjectReference,
     VsphereVirtualDiskVolumeSource,
 )
+from k8s_models.definitions.meta import ObjectMeta, LabelSelector, ListMeta
 
-class ConfigMap(BaseModel):
+class ConfigMap(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	binaryData: dict = Field(default=None, description=r""" BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-', '_' or '.'. BinaryData can contain byte sequences that are not in the UTF-8 range. The keys stored in BinaryData must not overlap with the ones in the Data field, this is enforced during validation process. Using this field will require 1.10+ apiserver and kubelet. """)
 	data: dict = Field(default=None, description=r""" Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use the BinaryData field. The keys stored in Data must not overlap with the keys in the BinaryData field, this is enforced during validation process. """)
@@ -47,13 +49,13 @@ class ConfigMap(BaseModel):
 	kind: str = Field(default="ConfigMap", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
 
-class ConfigMapList(BaseModel):
+class ConfigMapList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[ConfigMap] = Field(default=None, description=r""" Items is the list of ConfigMaps. """)
 	kind: str = Field(default="ConfigMapList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ListMeta = Field(default=None, description=r""" More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
 
-class Secret(BaseModel):
+class Secret(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	data: dict = Field(default=None, description=r""" Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4 """)
 	immutable: bool = Field(default=None, description=r""" Immutable, if set to true, ensures that data stored in the Secret cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil. """)
@@ -62,13 +64,13 @@ class Secret(BaseModel):
 	stringData: dict = Field(default=None, description=r""" stringData allows specifying non-binary secret data in string form. It is provided as a write-only input field for convenience. All keys and values are merged into the data field on write, overwriting any existing values. The stringData field is never output when reading from the API. """)
 	type: str = Field(default=None, description=r""" Used to facilitate programmatic handling of secret data. More info: https://kubernetes.io/docs/concepts/configuration/secret/#secret-types """)
 
-class SecretList(BaseModel):
+class SecretList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[Secret] = Field(default=None, description=r""" Items is a list of secret objects. More info: https://kubernetes.io/docs/concepts/configuration/secret """)
 	kind: str = Field(default="SecretList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ListMeta = Field(default=None, description=r""" Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 
-class PersistentVolumeClaim(BaseModel):
+class PersistentVolumeClaim(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="PersistentVolumeClaim", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
@@ -93,7 +95,7 @@ class PersistentVolumeClaimStatus(BaseModel):
 	conditions: List[PersistentVolumeClaimCondition] = Field(default=None, description=r""" conditions is the current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'. """)
 	phase: str = Field(default=None, description=r""" phase represents the current phase of PersistentVolumeClaim. """)
 
-class PersistentVolumeClaimList(BaseModel):
+class PersistentVolumeClaimList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[PersistentVolumeClaim] = Field(default=None, description=r""" items is a list of persistent volume claims. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims """)
 	kind: str = Field(default="PersistentVolumeClaimList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

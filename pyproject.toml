@@ -8,11 +8,11 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 pydantic = "^2.5.1"
-beautifulsoup4 = "^4.12.2"
-lxml = "^4.9.3"
-
+pyyaml = "^6.0.1"
 
 [tool.poetry.group.dev.dependencies]
+beautifulsoup4 = "^4.12.2"
+lxml = "^4.9.3"
 ruff = "^0.1.6"
 
 [build-system]

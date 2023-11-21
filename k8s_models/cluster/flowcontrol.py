@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.cluster.flowcontrol_apiserver_k8s_io import FlowSchema
 from k8s_models.cluster.flowcontrol_apiserver_k8s_io import PriorityLevelConfiguration
 from k8s_models.definitions.meta import ListMeta
@@ -24,7 +26,7 @@ class FlowSchemaSpec(BaseModel):
 class FlowSchemaStatus(BaseModel):
 	conditions: List[FlowSchemaCondition] = Field(default=None, description=r""" `conditions` is a list of the current states of FlowSchema. """)
 
-class FlowSchemaList(BaseModel):
+class FlowSchemaList(KubeModel):
 	apiVersion: str = Field(default="v1beta3", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[FlowSchema] = Field(default=None, description=r""" `items` is a list of FlowSchemas. """)
 	kind: str = Field(default="FlowSchemaList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
@@ -38,7 +40,7 @@ class PriorityLevelConfigurationSpec(BaseModel):
 class PriorityLevelConfigurationStatus(BaseModel):
 	conditions: List[PriorityLevelConfigurationCondition] = Field(default=None, description=r""" `conditions` is the current state of "request-priority". """)
 
-class PriorityLevelConfigurationList(BaseModel):
+class PriorityLevelConfigurationList(KubeModel):
 	apiVersion: str = Field(default="v1beta3", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[PriorityLevelConfiguration] = Field(default=None, description=r""" `items` is a list of request-priorities. """)
 	kind: str = Field(default="PriorityLevelConfigurationList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

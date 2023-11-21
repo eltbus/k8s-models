@@ -1,12 +1,14 @@
 from __future__ import annotations
 from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ObjectMeta
 from k8s_models.definitions.discovery_k8s_io import Endpoint
 from k8s_models.definitions.core import EndpointPort
 
-class EndpointSlice(BaseModel):
+class EndpointSlice(KubeModel):
 	addressType: str = Field(default=None, description=r""" addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name. """)
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	endpoints: List[Endpoint] = Field(default=None, description=r""" endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints. """)

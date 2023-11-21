@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ListMeta, Condition
 from k8s_models.metadata.admissionregistration_k8s_io import (
     MutatingWebhookConfiguration,
@@ -20,13 +22,13 @@ from k8s_models.definitions.admissionregistration_k8s_io import (
     Variable,
 )
 
-class MutatingWebhookConfigurationList(BaseModel):
+class MutatingWebhookConfigurationList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[MutatingWebhookConfiguration] = Field(default=None, description=r""" List of MutatingWebhookConfiguration. """)
 	kind: str = Field(default="MutatingWebhookConfigurationList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ListMeta = Field(default=None, description=r""" Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 
-class ValidatingWebhookConfigurationList(BaseModel):
+class ValidatingWebhookConfigurationList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[ValidatingWebhookConfiguration] = Field(default=None, description=r""" List of ValidatingWebhookConfiguration. """)
 	kind: str = Field(default="ValidatingWebhookConfigurationList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
@@ -46,7 +48,7 @@ class ValidatingAdmissionPolicyStatus(BaseModel):
 	observedGeneration: int = Field(default=None, description=r""" The generation observed by the controller. """)
 	typeChecking: TypeChecking = Field(default=None, description=r""" The results of type checking for each expression. Presence of this field indicates the completion of the type checking. """)
 
-class ValidatingAdmissionPolicyList(BaseModel):
+class ValidatingAdmissionPolicyList(KubeModel):
 	apiVersion: str = Field(default="v1beta1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[ValidatingAdmissionPolicy] = Field(default=None, description=r""" List of ValidatingAdmissionPolicy. """)
 	kind: str = Field(default="ValidatingAdmissionPolicyList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
@@ -58,7 +60,7 @@ class ValidatingAdmissionPolicyBindingSpec(BaseModel):
 	policyName: str = Field(default=None, description=r""" PolicyName references a ValidatingAdmissionPolicy name which the ValidatingAdmissionPolicyBinding binds to. If the referenced resource does not exist, this binding is considered invalid and will be ignored Required. """)
 	validationActions: List[str] = Field(default=None, description=r""" validationActions declares how Validations of the referenced ValidatingAdmissionPolicy are enforced. If a validation evaluates to false it is always enforced according to these actions.  Failures defined by the ValidatingAdmissionPolicy's FailurePolicy are enforced according to these actions only if the FailurePolicy is set to Fail, otherwise the failures are ignored. This includes compilation errors, runtime errors and misconfigurations of the policy.  validationActions is declared as a set of action values. Order does not matter. validationActions may not contain duplicates of the same action.  The supported actions values are:  "Deny" specifies that a validation failure results in a denied request.  "Warn" specifies that a validation failure is reported to the request client in HTTP Warning headers, with a warning code of 299. Warnings can be sent both for allowed or denied admission responses.  "Audit" specifies that a validation failure is included in the published audit event for the request. The audit event will contain a `validation.policy.admission.k8s.io/validation_failure` audit annotation with a value containing the details of the validation failures, formatted as a JSON list of objects, each with the following fields: - message: The validation failure message string - policy: The resource name of the ValidatingAdmissionPolicy - binding: The resource name of the ValidatingAdmissionPolicyBinding - expressionIndex: The index of the failed validations in the ValidatingAdmissionPolicy - validationActions: The enforcement actions enacted for the validation failure Example audit annotation: `"validation.policy.admission.k8s.io/validation_failure": "[{"message": "Invalid value", {"policy": "policy.example.com", {"binding": "policybinding.example.com", {"expressionIndex": "1", {"validationActions": ["Audit"]}]"`  Clients should expect to handle additional values by ignoring any values not recognized.  "Deny" and "Warn" may not be used together since this combination needlessly duplicates the validation failure both in the API response body and the HTTP warning headers.  Required. """)
 
-class ValidatingAdmissionPolicyBindingList(BaseModel):
+class ValidatingAdmissionPolicyBindingList(KubeModel):
 	apiVersion: str = Field(default="v1beta1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[ValidatingAdmissionPolicyBinding] = Field(default=None, description=r""" List of PolicyBinding. """)
 	kind: str = Field(default="ValidatingAdmissionPolicyBindingList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

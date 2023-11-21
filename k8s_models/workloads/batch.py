@@ -2,13 +2,15 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ObjectMeta, LabelSelector, Time, ListMeta
 from k8s_models.definitions.core import ObjectReference
 from k8s_models.definitions.batch import UncountedTerminatedPods, JobCondition
 from k8s_models.metadata.core import PodTemplateSpec
 from k8s_models.definitions.batch import JobTemplateSpec, PodFailurePolicy
 
-class CronJob(BaseModel):
+class CronJob(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="CronJob", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
@@ -30,13 +32,13 @@ class CronJobStatus(BaseModel):
 	lastScheduleTime: Time = Field(default=None, description=r""" Information when was the last time the job was successfully scheduled. """)
 	lastSuccessfulTime: Time = Field(default=None, description=r""" Information when was the last time the job successfully completed. """)
 
-class CronJobList(BaseModel):
+class CronJobList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[CronJob] = Field(default=None, description=r""" items is the list of CronJobs. """)
 	kind: str = Field(default="CronJobList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ListMeta = Field(default=None, description=r""" Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
 
-class Job(BaseModel):
+class Job(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="Job", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
@@ -72,7 +74,7 @@ class JobStatus(BaseModel):
 	terminating: int = Field(default=None, description=r""" The number of pods which are terminating (in phase Pending or Running and have a deletionTimestamp).  This field is alpha-level. The job controller populates the field when the feature gate JobPodReplacementPolicy is enabled (disabled by default). """)
 	uncountedTerminatedPods: UncountedTerminatedPods = Field(default=None, description=r""" uncountedTerminatedPods holds the UIDs of Pods that have terminated but the job controller hasn't yet accounted for in the status counters.  The job controller creates pods with a finalizer. When a pod terminates (succeeded or failed), the controller does three steps to account for it in the job status:  1. Add the pod UID to the arrays in this field. 2. Remove the pod finalizer. 3. Remove the pod UID from the arrays while increasing the corresponding     counter.  Old jobs might not be tracked using this field, in which case the field remains null. """)
 
-class JobList(BaseModel):
+class JobList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[Job] = Field(default=None, description=r""" items is the list of Jobs. """)
 	kind: str = Field(default="JobList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

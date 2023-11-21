@@ -1,29 +1,31 @@
 from __future__ import annotations
 from typing import List
 
-from pydantic import BaseModel, Field
-from k8s_models.definitions.meta import ObjectMeta, LabelSelector
-from k8s_models.definitions.core import TopologySelectorTerm, Quantity
+from pydantic import Field
+
+from k8s_models.models import KubeModel
 from k8s_models.config_and_storage.storage import (
     CSIDriverSpec,
     CSINodeSpec,
     VolumeAttachmentSpec,
     VolumeAttachmentStatus,
 )
+from k8s_models.definitions.core import TopologySelectorTerm, Quantity
+from k8s_models.definitions.meta import ObjectMeta, LabelSelector
 
-class CSIDriver(BaseModel):
+class CSIDriver(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="CSIDriver", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object metadata. metadata.Name indicates the name of the CSI driver that this object refers to; it MUST be the same name returned by the CSI GetPluginName() call for that driver. The driver name must be 63 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), dots (.), and alphanumerics between. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
 	spec: CSIDriverSpec = Field(default=None, description=r""" spec represents the specification of the CSI Driver. """)
 
-class CSINode(BaseModel):
+class CSINode(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="CSINode", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object's metadata. metadata.name must be the Kubernetes node name. """)
 	spec: CSINodeSpec = Field(default=None, description=r""" spec is the specification of CSINode """)
 
-class StorageClass(BaseModel):
+class StorageClass(KubeModel):
 	allowVolumeExpansion: bool = Field(default=None, description=r""" allowVolumeExpansion shows whether the storage class allow volume expand. """)
 	allowedTopologies: List[TopologySelectorTerm] = Field(default=None, description=r""" allowedTopologies restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature. """)
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
@@ -35,7 +37,7 @@ class StorageClass(BaseModel):
 	reclaimPolicy: str = Field(default=None, description=r""" reclaimPolicy controls the reclaimPolicy for dynamically provisioned PersistentVolumes of this storage class. Defaults to Delete. """)
 	volumeBindingMode: str = Field(default=None, description=r""" volumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature. """)
 
-class CSIStorageCapacity(BaseModel):
+class CSIStorageCapacity(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	capacity: Quantity = Field(default=None, description=r""" capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.  The semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable. """)
 	kind: str = Field(default="CSIStorageCapacity", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
@@ -44,7 +46,7 @@ class CSIStorageCapacity(BaseModel):
 	nodeTopology: LabelSelector = Field(default=None, description=r""" nodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable. """)
 	storageClassName: str = Field(default=None, description=r""" storageClassName represents the name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable. """)
 
-class VolumeAttachment(BaseModel):
+class VolumeAttachment(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="VolumeAttachment", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)

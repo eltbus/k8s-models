@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ListMeta
 from k8s_models.definitions.core import NodeSelector
 from k8s_models.service.networking_k8s_io import ClusterCIDR, Ingress, IngressClass
@@ -19,7 +21,7 @@ class ClusterCIDRSpec(BaseModel):
 	nodeSelector: NodeSelector = Field(default=None, description=r""" nodeSelector defines which nodes the config is applicable to. An empty or nil nodeSelector selects all nodes. This field is immutable. """)
 	perNodeHostBits: int = Field(default=None, description=r""" perNodeHostBits defines the number of host bits to be configured per node. A subnet mask determines how much of the address is used for network bits and host bits. For example an IPv4 address of 192.168.0.0/24, splits the address into 24 bits for the network portion and 8 bits for the host portion. To allocate 256 IPs, set this field to 8 (a /24 mask for IPv4 or a /120 for IPv6). Minimum value is 4 (16 IPs). This field is immutable. """)
 
-class ClusterCIDRList(BaseModel):
+class ClusterCIDRList(KubeModel):
 	apiVersion: str = Field(default="v1alpha1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[ClusterCIDR] = Field(default=None, description=r""" items is the list of ClusterCIDRs. """)
 	kind: str = Field(default="ClusterCIDRList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
@@ -34,7 +36,7 @@ class IngressSpec(BaseModel):
 class IngressStatus(BaseModel):
 	loadBalancer: IngressLoadBalancerStatus = Field(default=None, description=r""" loadBalancer contains the current status of the load-balancer. """)
 
-class IngressList(BaseModel):
+class IngressList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[Ingress] = Field(default=None, description=r""" items is the list of Ingress. """)
 	kind: str = Field(default="IngressList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
@@ -44,7 +46,7 @@ class IngressClassSpec(BaseModel):
 	controller: str = Field(default=None, description=r""" controller refers to the name of the controller that should handle this class. This allows for different "flavors" that are controlled by the same controller. For example, you may have different parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. "acme.io/ingress-controller". This field is immutable. """)
 	parameters: IngressClassParametersReference = Field(default=None, description=r""" parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters. """)
 
-class IngressClassList(BaseModel):
+class IngressClassList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[IngressClass] = Field(default=None, description=r""" items is the list of IngressClasses. """)
 	kind: str = Field(default="IngressClassList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

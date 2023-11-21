@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ObjectMeta, Time, MicroTime
 from k8s_models.definitions.core import EventSource, ObjectReference
 from k8s_models.definitions.events_k8s_io import EventSeries
 
-class Event(BaseModel):
+class Event(KubeModel):
 	action: str = Field(default=None, description=r""" action is what action was taken/failed regarding to the regarding object. It is machine-readable. This field cannot be empty for new Events and it can have at most 128 characters. """)
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	deprecatedCount: int = Field(default=None, description=r""" deprecatedCount is the deprecated field assuring backward compatibility with core.v1 Event type. """)

@@ -3,6 +3,7 @@ from typing import List
 
 from pydantic import BaseModel, Field
 
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ObjectMeta, Time, ListMeta
 from k8s_models.definitions.core import (
     Affinity,
@@ -76,7 +77,7 @@ class ContainerStatus(BaseModel):
 	started: bool = Field(default=None, description=r""" Started indicates whether the container has finished its postStart lifecycle hook and passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. In both cases, startup probes will run again. Is always true when no startupProbe is defined and container is running and has passed the postStart lifecycle hook. The null value must be treated the same as false. """)
 	state: ContainerState = Field(default=None, description=r""" State holds details about the container's current condition. """)
 
-class Pod(BaseModel):
+class Pod(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="Pod", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
@@ -142,13 +143,13 @@ class PodStatus(BaseModel):
 	resourceClaimStatuses: List[PodResourceClaimStatus] = Field(default=None, description=r""" Status of resource claims. """)
 	startTime: Time = Field(default=None, description=r""" RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod. """)
 
-class PodList(BaseModel):
+class PodList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[Pod] = Field(default=None, description=r""" List of pods. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md """)
 	kind: str = Field(default="PodList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ListMeta = Field(default=None, description=r""" Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 
-class ReplicationController(BaseModel):
+class ReplicationController(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="ReplicationController", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" If the Labels of a ReplicationController are empty, they are defaulted to be the same as the Pod(s) that the replication controller manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
@@ -169,7 +170,7 @@ class ReplicationControllerStatus(BaseModel):
 	readyReplicas: int = Field(default=None, description=r""" The number of ready replicas for this replication controller. """)
 	replicas: int = Field(default=None, description=r""" Replicas is the most recently observed number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller """)
 
-class ReplicationControllerList(BaseModel):
+class ReplicationControllerList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[ReplicationController] = Field(default=None, description=r""" List of replication controllers. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller """)
 	kind: str = Field(default="ReplicationControllerList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

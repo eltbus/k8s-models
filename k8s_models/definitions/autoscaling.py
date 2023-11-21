@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.core import Quantity
 from k8s_models.definitions.meta import Time, LabelSelector, ObjectMeta
 from k8s_models.definitions.unknown import ScaleSpec, ScaleStatus
@@ -16,7 +18,7 @@ class ContainerResourceMetricStatus(BaseModel):
 	current: MetricValueStatus = Field(default=None, description=r""" current contains the current value for the given metric """)
 	name: str = Field(default=None, description=r""" name is the name of the resource in question. """)
 
-class CrossVersionObjectReference(BaseModel):
+class CrossVersionObjectReference(KubeModel):
 	apiVersion: str = Field(default="v2", description=r""" apiVersion is the API version of the referent """)
 	kind: str = Field(default="CrossVersionObjectReference", description=r""" kind is the kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	name: str = Field(default=None, description=r""" name is the name of the referent; More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names """)
@@ -107,7 +109,7 @@ class ResourceMetricStatus(BaseModel):
 	current: MetricValueStatus = Field(default=None, description=r""" current contains the current value for the given metric """)
 	name: str = Field(default=None, description=r""" name is the name of the resource in question. """)
 
-class Scale(BaseModel):
+class Scale(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	kind: str = Field(default="Scale", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ObjectMeta = Field(default=None, description=r""" Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata. """)

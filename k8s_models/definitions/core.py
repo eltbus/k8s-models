@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import List, Any
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import Time, ObjectMeta, LabelSelector
 from k8s_models.config_and_storage.core import PersistentVolumeClaimSpec
 
@@ -456,11 +458,11 @@ class NodeSystemInfo(BaseModel):
 	osImage: str = Field(default=None, description=r""" OS Image reported by the node from /etc/os-release (e.g. Debian GNU/Linux 7 (wheezy)). """)
 	systemUUID: str = Field(default=None, description=r""" SystemUUID reported by the node. For unique machine identification MachineID is preferred. This field is specific to Red Hat hosts https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/rhsm/uuid """)
 
-class ObjectFieldSelector(BaseModel):
+class ObjectFieldSelector(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" Version of the schema the FieldPath is written in terms of, defaults to "v1". """)
 	fieldPath: str = Field(default=None, description=r""" Path of the field to select in the specified API version. """)
 
-class ObjectReference(BaseModel):
+class ObjectReference(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" API version of the referent. """)
 	fieldPath: str = Field(default=None, description=r""" If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. """)
 	kind: str = Field(default="ObjectReference", description=r""" Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

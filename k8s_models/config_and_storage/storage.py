@@ -2,9 +2,9 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
-from k8s_models.definitions.meta import ListMeta
+
+from k8s_models.models import KubeModel
 from k8s_models.cluster.authentication_k8s_io import TokenRequest
-from k8s_models.definitions.storage_k8s_io import CSINodeDriver, VolumeAttachmentSource, VolumeError
 from k8s_models.config_and_storage.storage_k8s_io import (
     CSIDriver,
     CSINode,
@@ -12,6 +12,8 @@ from k8s_models.config_and_storage.storage_k8s_io import (
     StorageClass,
     VolumeAttachment
 )
+from k8s_models.definitions.meta import ListMeta
+from k8s_models.definitions.storage_k8s_io import CSINodeDriver, VolumeAttachmentSource, VolumeError
 
 class CSIDriverSpec(BaseModel):
 	attachRequired: bool = Field(default=None, description=r""" attachRequired indicates this CSI volume driver requires an attach operation (because it implements the CSI ControllerPublishVolume() method), and that the Kubernetes attach detach controller should call the attach volume interface which checks the volumeattachment status and waits until the volume is attached before proceeding to mounting. The CSI external-attacher coordinates with CSI volume driver and updates the volumeattachment status when the attach operation is complete. If the CSIDriverRegistry feature gate is enabled and the value is specified to false, the attach operation will be skipped. Otherwise the attach operation will be called.  This field is immutable. """)
@@ -23,7 +25,7 @@ class CSIDriverSpec(BaseModel):
 	tokenRequests: List[TokenRequest] = Field(default=None, description=r""" tokenRequests indicates the CSI driver needs pods' service account tokens it is mounting volume for to do necessary authentication. Kubelet will pass the tokens in VolumeContext in the CSI NodePublishVolume calls. The CSI driver should parse and validate the following VolumeContext: "csi.storage.k8s.io/serviceAccount.tokens": {   "<audience>": {     "token": <token>,     "expirationTimestamp": <expiration timestamp in RFC3339>,   },   ... }  Note: Audience in each TokenRequest should be different and at most one token is empty string. To receive a new token after expiry, RequiresRepublish can be used to trigger NodePublishVolume periodically. """)
 	volumeLifecycleModes: List[str] = Field(default=None, description=r""" volumeLifecycleModes defines what kind of volumes this CSI volume driver supports. The default if the list is empty is "Persistent", which is the usage defined by the CSI specification and implemented in Kubernetes via the usual PV/PVC mechanism.  The other mode is "Ephemeral". In this mode, volumes are defined inline inside the pod spec with CSIVolumeSource and their lifecycle is tied to the lifecycle of that pod. A driver has to be aware of this because it is only going to get a NodePublishVolume call for such a volume.  For more information about implementing this mode, see https://kubernetes-csi.github.io/docs/ephemeral-local-volumes.html A driver can support one or more of these modes and more modes may be added in the future.  This field is beta. This field is immutable. """)
 
-class CSIDriverList(BaseModel):
+class CSIDriverList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[CSIDriver] = Field(default=None, description=r""" items is the list of CSIDriver """)
 	kind: str = Field(default="CSIDriverList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
@@ -32,19 +34,19 @@ class CSIDriverList(BaseModel):
 class CSINodeSpec(BaseModel):
 	drivers: List[CSINodeDriver] = Field(default=None, description=r""" drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty. """)
 
-class CSINodeList(BaseModel):
+class CSINodeList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[CSINode] = Field(default=None, description=r""" items is the list of CSINode """)
 	kind: str = Field(default="CSINodeList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ListMeta = Field(default=None, description=r""" Standard list metadata More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
 
-class StorageClassList(BaseModel):
+class StorageClassList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[StorageClass] = Field(default=None, description=r""" items is the list of StorageClasses """)
 	kind: str = Field(default="StorageClassList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
 	metadata: ListMeta = Field(default=None, description=r""" Standard list metadata More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata """)
 
-class CSIStorageCapacityList(BaseModel):
+class CSIStorageCapacityList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[CSIStorageCapacity] = Field(default=None, description=r""" items is the list of CSIStorageCapacity objects. """)
 	kind: str = Field(default="CSIStorageCapacityList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
@@ -61,7 +63,7 @@ class VolumeAttachmentStatus(BaseModel):
 	attachmentMetadata: dict = Field(default=None, description=r""" attachmentMetadata is populated with any information returned by the attach operation, upon successful attach, that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher. """)
 	detachError: VolumeError = Field(default=None, description=r""" detachError represents the last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher. """)
 
-class VolumeAttachmentList(BaseModel):
+class VolumeAttachmentList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[VolumeAttachment] = Field(default=None, description=r""" items is the list of VolumeAttachments """)
 	kind: str = Field(default="VolumeAttachmentList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)

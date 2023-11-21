@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import LabelSelector
 
 class AuditAnnotation(BaseModel):
@@ -45,7 +47,7 @@ class NamedRuleWithOperations(BaseModel):
 	resources: List[str] = Field(default=None, description=r""" Resources is a list of resources this rule applies to.  For example: 'pods' means pods. 'pods/log' means the log subresource of pods. '\*' means all resources, but not subresources. 'pods/\*' means all subresources of pods. '\*/scale' means all scale subresources. '\*/\*' means all resources and their subresources.  If wildcard is present, the validation rule will ensure resources do not overlap with each other.  Depending on the enclosing object, subresources might not be allowed. Required. """)
 	scope: str = Field(default=None, description=r""" scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "*" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "*" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "*". """)
 
-class ParamKind(BaseModel):
+class ParamKind(KubeModel):
 	apiVersion: str = Field(default="v1beta1", description=r""" APIVersion is the API group version the resources belong to. In format of "group/version". Required. """)
 	kind: str = Field(default="ParamKind", description=r""" Kind is the API kind the resources belong to. Required. """)
 

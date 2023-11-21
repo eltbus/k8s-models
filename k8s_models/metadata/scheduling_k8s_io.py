@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from k8s_models.models import KubeModel
 from k8s_models.definitions.meta import ObjectMeta
 
-class PriorityClass(BaseModel):
+class PriorityClass(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	description: str = Field(default=None, description=r""" description is an arbitrary string that usually provides guidelines on when this priority class should be used. """)
 	globalDefault: bool = Field(default=None, description=r""" globalDefault specifies whether this PriorityClass should be considered as the default priority for pods that do not have any priority class. Only one PriorityClass can be marked as `globalDefault`. However, if more than one PriorityClasses exists with their `globalDefault` field set to true, the smallest value of such global default PriorityClasses will be used as the default priority. """)

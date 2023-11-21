@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
+from k8s_models.models import KubeModel
 from k8s_models.cluster.certificates_k8s_io import CertificateSigningRequest
 from k8s_models.definitions.certificates_k8s_io import CertificateSigningRequestCondition
 from k8s_models.definitions.meta import ListMeta
@@ -20,7 +22,7 @@ class CertificateSigningRequestStatus(BaseModel):
 	certificate: str = Field(default=None, description=r""" certificate is populated with an issued certificate by the signer after an Approved condition is present. This field is set via the /status subresource. Once populated, this field is immutable.  If the certificate signing request is denied, a condition of type "Denied" is added and this field remains empty. If the signer cannot issue the certificate, a condition of type "Failed" is added and this field remains empty.  Validation requirements:  1. certificate must contain one or more PEM blocks.  2. All PEM blocks must have the "CERTIFICATE" label, contain no headers, and the encoded data   must be a BER-encoded ASN.1 Certificate structure as described in section 4 of RFC5280.  3. Non-PEM content may appear before or after the "CERTIFICATE" PEM blocks and is unvalidated,   to allow for explanatory text as described in section 5.2 of RFC7468.  If more than one PEM block is present, and the definition of the requested spec.signerName does not indicate otherwise, the first block is the issued certificate, and subsequent blocks should be treated as intermediate certificates and presented in TLS handshakes.  The certificate is encoded in PEM format.  When serialized as JSON or YAML, the data is additionally base64-encoded, so it consists of:      base64(     -----BEGIN CERTIFICATE-----     ...     -----END CERTIFICATE-----     ) """)
 	conditions: List[CertificateSigningRequestCondition] = Field(default=None, description=r""" conditions applied to the request. Known conditions are "Approved", "Denied", and "Failed". """)
 
-class CertificateSigningRequestList(BaseModel):
+class CertificateSigningRequestList(KubeModel):
 	apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)
 	items: List[CertificateSigningRequest] = Field(default=None, description=r""" items is a collection of CertificateSigningRequest objects """)
 	kind: str = Field(default="CertificateSigningRequestList", description=r""" Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds """)
