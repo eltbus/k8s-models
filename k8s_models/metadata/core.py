@@ -4,7 +4,6 @@ from typing import List
 from pydantic import BaseModel, Field
 from k8s_models.definitions.meta import ObjectMeta
 from k8s_models.definitions.core import LimitRangeItem
-from k8s_models.metadata.core import PodTemplateSpec
 from k8s_models.workloads.core import PodSpec
 
 class LimitRange(BaseModel):

@@ -95,6 +95,38 @@ def map_kind_to_type(kind: str) -> str:
             return kind
 
 
+def convert_invalid_parameter_name(name: str) -> str:
+    match name:
+        # Python reserved works
+        case "continue":
+            return "keep_on"
+        case "except":
+            return "besides"
+        case "from":
+            return "sources"
+        case "not":
+            return "nay"
+        # Invalid
+        case "$ref":
+            return "ref" 
+        case "$schema":
+            return "schema"
+        case "x-kubernetes-embedded":
+            return "x_kubernetes_embedded"
+        case "x-kubernetes-int":
+            return "x_kubernetes_int"
+        case "x-kubernetes-list":
+            return "x_kubernetes_list"
+        case "x-kubernetes-map":
+            return "x_kubernetes_map"
+        case "x-kubernetes-preserve":
+            return "x_kubernetes_preserve"
+        case "x-kubernetes-validations":
+            return "x_kubernetes_validations"
+        case _:
+            return name
+
+
 class Parameter(BaseModel):
     name: str
     kind: str
@@ -114,12 +146,26 @@ class Parameter(BaseModel):
     def repr_as_pydantic_field(self, resource_kind: Optional[str] = None, resource_version: Optional[str] = None):
         parts = [map_kind_to_type(self) for self in self.kind.split(' ')]
         field_type = f'{parts[1]}[{parts[0]}]' if len(parts) == 2 else parts[0]
+        field_arg_list = [f'default="{resource_version}"' , f'description=r""" {self.description} """']
+
         if self.name == "apiVersion":
-            return f'{self.name}: {field_type} = Field(default="{resource_version}", description=r""" {self.description} """)'
+            field_arg_list = [f'default="{resource_version}"' , f'description=r""" {self.description} """']
         elif self.name == "kind":
-            return f'{self.name}: {field_type} = Field(default="{resource_kind}", description=r""" {self.description} """)'
+            field_arg_list = [f'default="{resource_kind}"' , f'description=r""" {self.description} """']
         else:
-            return f'{self.name}: {field_type} = Field(default=None, description=r""" {self.description} """)'
+            field_arg_list = [f'default=None' , f'description=r""" {self.description} """']
+
+        # Append alias if needed
+        if self.name != self.valid_name:
+            field_arg_list.append(f'alias="{self.name}"')
+
+        field_args = ', '.join(field_arg_list)
+        result = f'{self.valid_name}: {field_type} = Field({field_args})'
+        return result
+
+    @property
+    def valid_name(self):
+        return convert_invalid_parameter_name(self.name)
     
 
 class Resource(BaseModel):
