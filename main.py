@@ -6,43 +6,44 @@ from typing import List, Iterator, Optional
 from bs4 import BeautifulSoup, Tag
 from pydantic import BaseModel, Field
 
+
 def is_apis_div(element) -> bool:
-    return element.name == 'div' and element.get('id', '').endswith("-apis")
+    return element.name == "div" and element.get("id", "").endswith("-apis")
 
 
 def is_definition_div(element) -> bool:
-    return element.name == 'div' and element.get('id') == "definitions"
+    return element.name == "div" and element.get("id") == "definitions"
 
 
 def is_deprecated_div(element) -> bool:
-    return element.name == 'div' and element.get('id') == "old-api-versions"
+    return element.name == "div" and element.get("id") == "old-api-versions"
 
 
 def is_resource_container_div(element) -> bool:
-    return element.name == 'div' and 'resource-container' in element.get('class', [])
+    return element.name == "div" and "resource-container" in element.get("class", [])
 
 
 def is_params_table(element) -> bool:
-    return element.name == 'table' and 'col-md-8' not in element.get('class', [])
+    return element.name == "table" and "col-md-8" not in element.get("class", [])
 
 
 def is_inline_definition_container_div(element) -> bool:
-    return element.name == 'div' and 'inline-definitions-container' in element.get('class', [])
+    return element.name == "div" and "inline-definitions-container" in element.get(
+        "class", []
+    )
 
 
 def is_inline_definition_h3(element) -> bool:
-    return element.name == 'h3' and 'inline-definition' in element.get('class', [])
+    return element.name == "h3" and "inline-definition" in element.get("class", [])
 
 
 def is_definition_container_div(element) -> bool:
-    return element.name == 'div' and 'definition-container' in element.get('class', [])
+    return element.name == "div" and "definition-container" in element.get("class", [])
 
 
 def is_api_div(element) -> bool:
     return (
-        is_apis_div(element)
-        or is_definition_div(element)
-        or is_deprecated_div(element)
+        is_apis_div(element) or is_definition_div(element) or is_deprecated_div(element)
     )
 
 
@@ -55,10 +56,7 @@ def is_resource_div(element) -> bool:
 
 
 def is_handled_div(element) -> bool:
-    return (
-        is_api_div(element)
-        or is_resource_div(element)
-    )
+    return is_api_div(element) or is_resource_div(element)
 
 
 def gen_api_tags(soup: BeautifulSoup) -> Iterator[Tag]:
@@ -78,7 +76,7 @@ def gen_definition_tags(soup: BeautifulSoup) -> Iterator[Tag]:
 def map_kind_to_type(kind: str) -> str:
     match kind:
         case "array":
-            return "List" 
+            return "List"
         case "boolean":
             return "bool"
         case "integer":
@@ -88,7 +86,7 @@ def map_kind_to_type(kind: str) -> str:
         case "object":
             return "dict"
         case "string":
-            return "str" 
+            return "str"
         case "":
             return "Any"
         case _:
@@ -108,7 +106,7 @@ def convert_invalid_parameter_name(name: str) -> str:
             return "nay"
         # Invalid
         case "$ref":
-            return "ref" 
+            return "ref"
         case "$schema":
             return "schema"
         case "x-kubernetes-embedded":
@@ -135,38 +133,62 @@ class Parameter(BaseModel):
     @classmethod
     def from_tr_tag(cls, tag: Tag) -> Parameter:
         if isinstance(tag, Tag):
-            col_tags = tag.find_all('td')
-            name_tag = col_tags[0].find('code')
-            name = name_tag.get_text() if isinstance(name_tag, Tag) and name_tag is not None else ""
-            kind_tag = col_tags[0].find('i')
-            kind = kind_tag.get_text() if isinstance(kind_tag, Tag) and kind_tag is not None else ""
+            col_tags = tag.find_all("td")
+            name_tag = col_tags[0].find("code")
+            name = (
+                name_tag.get_text()
+                if isinstance(name_tag, Tag) and name_tag is not None
+                else ""
+            )
+            kind_tag = col_tags[0].find("i")
+            kind = (
+                kind_tag.get_text()
+                if isinstance(kind_tag, Tag) and kind_tag is not None
+                else ""
+            )
             description = col_tags[1].get_text().strip()
         return cls(name=name, kind=kind, description=description)
 
-    def repr_as_pydantic_field(self, resource_kind: Optional[str] = None, resource_version: Optional[str] = None):
-        parts = [map_kind_to_type(self) for self in self.kind.split(' ')]
-        field_type = f'{parts[1]}[{parts[0]}]' if len(parts) == 2 else parts[0]
-        field_arg_list = [f'default="{resource_version}"' , f'description=r""" {self.description} """']
+    def repr_as_pydantic_field(
+        self,
+        resource_kind: Optional[str] = None,
+        resource_version: Optional[str] = None,
+    ):
+        parts = [map_kind_to_type(self) for self in self.kind.split(" ")]
+        field_type = f"{parts[1]}[{parts[0]}]" if len(parts) == 2 else parts[0]
+        field_arg_list = [
+            f'default="{resource_version}"',
+            f'description=r""" {self.description} """',
+        ]
 
         if self.name == "apiVersion":
-            field_arg_list = [f'default="{resource_version}"' , f'description=r""" {self.description} """']
+            field_arg_list = [
+                f'default="{resource_version}"',
+                f'description=r""" {self.description} """',
+            ]
         elif self.name == "kind":
-            field_arg_list = [f'default="{resource_kind}"' , f'description=r""" {self.description} """']
+            field_arg_list = [
+                f'default="{resource_kind}"',
+                f'description=r""" {self.description} """',
+            ]
         else:
-            field_arg_list = [f'default=None' , f'description=r""" {self.description} """']
+            field_arg_list = [
+                "default=None",
+                f'description=r""" {self.description} """',
+            ]
 
         # Append alias if needed
         if self.name != self.valid_name:
             field_arg_list.append(f'alias="{self.name}"')
 
-        field_args = ', '.join(field_arg_list)
-        result = f'{self.valid_name}: {field_type} = Field({field_args})'
+        field_args = ", ".join(field_arg_list)
+        result = f"{self.valid_name}: {field_type} = Field({field_args})"
         return result
 
     @property
     def valid_name(self):
         return convert_invalid_parameter_name(self.name)
-    
+
 
 class Resource(BaseModel):
     kind: str
@@ -176,14 +198,26 @@ class Resource(BaseModel):
 
     @classmethod
     def from_resource_container_tag(cls, tag: Tag) -> Resource:
-        kind_tag =  tag.find('span', class_='k')
-        kind = kind_tag.get_text() if isinstance(kind_tag, Tag) and kind_tag is not None else ""
+        kind_tag = tag.find("span", class_="k")
+        kind = (
+            kind_tag.get_text()
+            if isinstance(kind_tag, Tag) and kind_tag is not None
+            else ""
+        )
 
-        version_tag =  tag.find('span', class_='v')
-        version = version_tag.get_text() if isinstance(version_tag, Tag) and version_tag is not None else ""
+        version_tag = tag.find("span", class_="v")
+        version = (
+            version_tag.get_text()
+            if isinstance(version_tag, Tag) and version_tag is not None
+            else ""
+        )
 
-        group_tag =  tag.find('span', class_='g')
-        group = group_tag.get_text() if isinstance(group_tag, Tag) and group_tag is not None else ""
+        group_tag = tag.find("span", class_="g")
+        group = (
+            group_tag.get_text()
+            if isinstance(group_tag, Tag) and group_tag is not None
+            else ""
+        )
 
         parameters = []
         table_tag = tag.find(is_params_table)
@@ -196,8 +230,13 @@ class Resource(BaseModel):
 
     @classmethod
     def from_inline_definition_container_tag(cls, tag: Tag) -> Resource:
-        kind_version_group_tag =  tag.find(is_inline_definition_h3)
-        kind, version, group = kind_version_group_tag.get_text().split(" ") if isinstance(kind_version_group_tag, Tag) and kind_version_group_tag is not None else ""
+        kind_version_group_tag = tag.find(is_inline_definition_h3)
+        kind, version, group = (
+            kind_version_group_tag.get_text().split(" ")
+            if isinstance(kind_version_group_tag, Tag)
+            and kind_version_group_tag is not None
+            else ""
+        )
         table_tag = tag.find("tbody")
         parameters = []
         if isinstance(table_tag, Tag):
@@ -207,7 +246,12 @@ class Resource(BaseModel):
 
     def repr_as_pydantic_model(self) -> str:
         head = f"class {self.kind}(BaseModel):\n"
-        fields = [parameter.repr_as_pydantic_field(resource_kind=self.kind, resource_version=self.version) for parameter in self.parameters]
+        fields = [
+            parameter.repr_as_pydantic_field(
+                resource_kind=self.kind, resource_version=self.version
+            )
+            for parameter in self.parameters
+        ]
         fields_with_indentation = ["\t" + field for field in fields]
         body = "\n".join(fields_with_indentation)
         return head + body
@@ -239,14 +283,18 @@ class API(BaseModel):
 
     @classmethod
     def from_api_tag(cls, tag: Tag) -> API:
-        name_tag =  tag.find("h1")
+        name_tag = tag.find("h1")
         name = name_tag.get_text() if name_tag is not None else ""
 
         description_tag = tag.find("p")
-        description = description_tag.get_text().replace("\n", " ") if description_tag is not None else ""
+        description = (
+            description_tag.get_text().replace("\n", " ")
+            if description_tag is not None
+            else ""
+        )
 
         resources = []
-        
+
         while (next_element := tag.find_next_sibling(is_handled_div)) is not None:
             if not isinstance(next_element, Tag):
                 break
@@ -255,13 +303,17 @@ class API(BaseModel):
             if is_resource_container_div(tag):
                 resources.append(Resource.from_resource_container_tag(tag))
 
-                for inline_definition_container_tag in tag.find_all(is_inline_definition_container_div):
-                    result = Resource.from_inline_definition_container_tag(inline_definition_container_tag)
+                for inline_definition_container_tag in tag.find_all(
+                    is_inline_definition_container_div
+                ):
+                    result = Resource.from_inline_definition_container_tag(
+                        inline_definition_container_tag
+                    )
                     resources.append(result)
                 continue
 
             if is_definition_container_div(tag):
-                name_tag =  tag.find("h2")
+                name_tag = tag.find("h2")
                 name = name_tag.get_text() if name_tag is not None else ""
                 print(f"\t - {name}")
 
@@ -275,12 +327,7 @@ class API(BaseModel):
 
     @property
     def module_name(self):
-        return (
-            self.name
-            .lower()
-            .replace(" ", "_")
-            .replace("&", "and")
-        )
+        return self.name.lower().replace(" ", "_").replace("&", "and")
 
 
 def gen_apis_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[API]:
@@ -292,7 +339,9 @@ def gen_apis_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[API]:
 
 def gen_definitions_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource]:
     definition_tags = soup.find_all(is_definition_container_div)
-    definitions = map(lambda x: Resource.from_resource_container_tag(x), definition_tags)
+    definitions = map(
+        lambda x: Resource.from_resource_container_tag(x), definition_tags
+    )
     for definition in definitions:
         yield definition
 
@@ -302,10 +351,12 @@ def gen_resources_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[Resource
         for resource in api.resources:
             yield resource
 
+
 def load_soup():
     with open("v1.28.html", "r") as f:
         html_doc = f.read()
-    return BeautifulSoup(html_doc, 'html.parser')
+    return BeautifulSoup(html_doc, "html.parser")
+
 
 def test():
     soup = load_soup()
@@ -314,6 +365,7 @@ def test():
         for resource in api.resources:
             print(f"\t - {resource.kind}")
         print("=" * 120)
+
 
 def show_versions():
     soup = load_soup()
@@ -331,6 +383,7 @@ def show_versions():
             if parameter.name == "apiVersion":
                 print(f"\t{definition.kind}, {definition.version}, {definition.group}")
 
+
 def main():
     soup = load_soup()
 
@@ -344,6 +397,7 @@ def main():
 
     for definition in gen_definitions_from_kubernetes_docs(soup):
         definition.add_to_module(root=root, module_name="definitions")
+
 
 if __name__ == "__main__":
     main()
