@@ -232,19 +232,20 @@ class Resource(BaseModel):
         return cls(kind=kind, version=version, group=group, parameters=parameters)
 
     @classmethod
-    def from_inline_definition_container_tag(cls, tag: Tag) -> Resource:
-        kind_version_group_tag = tag.find(is_inline_definition_h3)
+    def from_inline_definition_tag(cls, tag: Tag) -> Resource:
         kind, version, group = (
-            kind_version_group_tag.get_text().split(" ")
-            if isinstance(kind_version_group_tag, Tag)
-            and kind_version_group_tag is not None
+            tag.get_text().split(" ")
+            if isinstance(tag, Tag)
+            and tag is not None
             else ""
         )
-        table_tag = tag.find("tbody")
         parameters = []
+        table_tag = tag.find_next_sibling("table")
         if isinstance(table_tag, Tag):
-            for row_tag in table_tag.find_all("tr"):
-                parameters.append(Parameter.from_tr_tag(row_tag))
+            tbody_tag = table_tag.find("tbody")
+            if isinstance(tbody_tag, Tag):
+                for row_tag in tbody_tag.find_all("tr"):
+                    parameters.append(Parameter.from_tr_tag(row_tag))
         return cls(kind=kind, version=version, group=group, parameters=parameters)
 
     def repr_as_pydantic_model(self) -> str:
@@ -256,7 +257,10 @@ class Resource(BaseModel):
             for parameter in self.parameters
         ]
         fields_with_indentation = ["\t" + field for field in fields]
-        body = "\n".join(fields_with_indentation)
+        if not fields_with_indentation:
+            body = "\tpass\n"
+        else:
+            body = "\n".join(fields_with_indentation)
         return head + body
 
     def create_module(self, root: Path, module_name: str):
@@ -309,16 +313,16 @@ class API(BaseModel):
                 for inline_definition_container_tag in tag.find_all(
                     is_inline_definition_container_div
                 ):
-                    result = Resource.from_inline_definition_container_tag(
-                        inline_definition_container_tag
-                    )
-                    resources.append(result)
+                    for inline_definition_tag in inline_definition_container_tag.find_all(is_inline_definition_h3):
+                        result = Resource.from_inline_definition_tag(
+                            inline_definition_tag
+                        )
+                        resources.append(result)
                 continue
 
             if is_definition_container_div(tag):
                 name_tag = tag.find("h2")
                 name = name_tag.get_text() if name_tag is not None else ""
-                print(f"\t - {name}")
 
             if is_api_div(tag) or is_definition_div(tag):
                 break
@@ -361,6 +365,23 @@ def load_soup():
     return BeautifulSoup(html_doc, "html.parser")
 
 
+def show():
+    soup = load_soup()
+    for api in gen_apis_from_kubernetes_docs(soup):
+        print(f"{api.name}")
+        for resource in api.resources:
+            print(f"\t{resource.kind}")
+            for parameter in resource.parameters:
+                print(f"\t\t{parameter.name}")
+            pass
+
+    print("definitions")
+    for definition in gen_definitions_from_kubernetes_docs(soup):
+        print(f"\t{definition.kind}")
+        for parameter in definition.parameters:
+            print(f"\t\t{parameter.name}")
+        pass
+
 def main():
     """
     Used to generate the "core" model definitions.
@@ -383,3 +404,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # show()
