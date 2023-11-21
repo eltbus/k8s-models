@@ -104,21 +104,24 @@ def convert_invalid_parameter_name(name: str) -> str:
             return "sources"
         case "not":
             return "nay"
-        # Invalid
+        # Invalid starting character
         case "$ref":
             return "ref"
         case "$schema":
             return "schema"
-        case "x-kubernetes-embedded":
-            return "x_kubernetes_embedded"
-        case "x-kubernetes-int":
-            return "x_kubernetes_int"
-        case "x-kubernetes-list":
-            return "x_kubernetes_list"
-        case "x-kubernetes-map":
-            return "x_kubernetes_map"
-        case "x-kubernetes-preserve":
-            return "x_kubernetes_preserve"
+        # Invalid hyphens
+        case "x-kubernetes-embedded-resource":
+            return "x_kubernetes_embedded_resource"
+        case "x-kubernetes-int-or-string":
+            return "x_kubernetes_int_or_string"
+        case "x-kubernetes-list-map-keys":
+            return "x_kubernetes_list_map_keys"
+        case "x-kubernetes-list-type":
+            return "x_kubernetes_list_type"
+        case "x-kubernetes-map-type":
+            return "x_kubernetes_map_type"
+        case "x-kubernetes-preserve-unknown-fields":
+            return "x_kubernetes_preserve_unknown_fields"
         case "x-kubernetes-validations":
             return "x_kubernetes_validations"
         case _:
@@ -358,36 +361,15 @@ def load_soup():
     return BeautifulSoup(html_doc, "html.parser")
 
 
-def test():
-    soup = load_soup()
-    for api in gen_apis_from_kubernetes_docs(soup):
-        print(api.name)
-        for resource in api.resources:
-            print(f"\t - {resource.kind}")
-        print("=" * 120)
-
-
-def show_versions():
-    soup = load_soup()
-
-    for api in gen_apis_from_kubernetes_docs(soup):
-        print(api.module_name)
-        for resource in api.resources:
-            for parameter in resource.parameters:
-                if parameter.name == "apiVersion":
-                    print(f"\t{resource.kind}, {resource.version}, {resource.group}")
-
-    print("definitions")
-    for definition in gen_definitions_from_kubernetes_docs(soup):
-        for parameter in definition.parameters:
-            if parameter.name == "apiVersion":
-                print(f"\t{definition.kind}, {definition.version}, {definition.group}")
-
-
 def main():
+    """
+    Used to generate the "core" model definitions.
+    It does not add the related import files, nor can it handle missing classes in the documentation.
+    Generate, and manually resolve the issues, or, if previously generated, copy the imports.
+    """
     soup = load_soup()
 
-    root = Path(__file__).parent / "k8s_models2"
+    root = Path(__file__).parent / "k8s_models_info"
     root.mkdir(exist_ok=True)
     package_init_file_path = root / "__init__.py"
     package_init_file_path.touch(exist_ok=True)
@@ -401,5 +383,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    # test()
-    # show_versions()
