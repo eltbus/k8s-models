@@ -106,9 +106,9 @@ def convert_invalid_parameter_name(name: str) -> str:
             return "nay"
         # Invalid starting character
         case "$ref":
-            return "ref"
+            return "json_schema_ref"
         case "$schema":
-            return "schema"
+            return "json_schema_uri"
         # Invalid hyphens
         case "x-kubernetes-embedded-resource":
             return "x_kubernetes_embedded_resource"
