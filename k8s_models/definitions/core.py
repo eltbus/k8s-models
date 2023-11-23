@@ -400,9 +400,9 @@ class NFSVolumeSource(BaseModel):
     server: str = Field(default=None, description=r""" server is the hostname or IP address of the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs """)
 
 class NamespaceCondition(BaseModel):
-    lastTransitionTime: Time = Field(default=None, description=r"""  """)
-    message: str = Field(default=None, description=r"""  """)
-    reason: str = Field(default=None, description=r"""  """)
+    lastTransitionTime: Time = Field(default=None)
+    message: str = Field(default=None)
+    reason: str = Field(default=None)
     status: str = Field(default=None, description=r""" Status of the condition, one of True, False, Unknown. """)
     type: str = Field(default=None, description=r""" Type of namespace controller condition. """)
 
@@ -476,8 +476,8 @@ class PersistentVolumeClaimCondition(BaseModel):
     lastTransitionTime: Time = Field(default=None, description=r""" lastTransitionTime is the time the condition transitioned from one status to another. """)
     message: str = Field(default=None, description=r""" message is the human-readable message indicating details about last transition. """)
     reason: str = Field(default=None, description=r""" reason is a unique, this should be a short, machine understandable string that gives the reason for condition's last transition. If it reports "ResizeStarted" that means the underlying persistent volume is being resized. """)
-    status: str = Field(default=None, description=r"""  """)
-    type: str = Field(default=None, description=r"""  """)
+    status: str = Field(default=None)
+    type: str = Field(default=None)
 
 class PersistentVolumeClaimTemplate(BaseModel):
     metadata: ObjectMeta = Field(default=None, description=r""" May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation. """)
@@ -520,7 +520,7 @@ class PodDNSConfig(BaseModel):
 
 class PodDNSConfigOption(BaseModel):
     name: str = Field(default=None, description=r""" Required. """)
-    value: str = Field(default=None, description=r"""  """)
+    value: str = Field(default=None)
 
 class PodIP(BaseModel):
     ip: str = Field(default=None, description=r""" IP is the IP address assigned to the pod """)

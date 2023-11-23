@@ -166,11 +166,9 @@ class Parameter(BaseModel):
         elif self.name == "kind":
             field_arg_list.append(f'default="{resource_kind}"')
         else:
-            field_arg_list.append(f'default=None')
+            field_arg_list.append('default=None')
 
         # Append alias if needed
-        if self.name != self.valid_name:
-            field_arg_list.append(f'alias="{self.name}"')
         if self.name != self.valid_name:
             field_arg_list.append(f'alias="{self.name}"')
 
