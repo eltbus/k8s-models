@@ -159,30 +159,23 @@ class Parameter(BaseModel):
     ):
         parts = [map_kind_to_type(self) for self in self.kind.split(" ")]
         field_type = f"{parts[1]}[{parts[0]}]" if len(parts) == 2 else parts[0]
-        field_arg_list = [
-            f'default="{resource_version}"',
-            f'description=r""" {self.description} """',
-        ]
+        field_arg_list = []
 
         if self.name == "apiVersion":
-            field_arg_list = [
-                f'default="{resource_version}"',
-                f'description=r""" {self.description} """',
-            ]
+            field_arg_list.append(f'default="{resource_version}"')
         elif self.name == "kind":
-            field_arg_list = [
-                f'default="{resource_kind}"',
-                f'description=r""" {self.description} """',
-            ]
+            field_arg_list.append(f'default="{resource_kind}"')
         else:
-            field_arg_list = [
-                "default=None",
-                f'description=r""" {self.description} """',
-            ]
+            field_arg_list.append(f'default=None')
 
         # Append alias if needed
         if self.name != self.valid_name:
             field_arg_list.append(f'alias="{self.name}"')
+        if self.name != self.valid_name:
+            field_arg_list.append(f'alias="{self.name}"')
+
+        if self.description:
+            field_arg_list.append(f'description=r""" {self.description} """')
 
         field_args = ", ".join(field_arg_list)
         result = f"{self.valid_name}: {field_type} = Field({field_args})"
