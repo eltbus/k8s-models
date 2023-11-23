@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "k8s-models"
-version = "0.1.1a2"
+version = "0.1.0a0"
 description = ""
 authors = ["eltbus <33374178+eltbus@users.noreply.github.com>"]
 readme = "README.md"
@@ -9,11 +9,13 @@ readme = "README.md"
 python = "^3.11"
 pydantic = "^2.5.1"
 pyyaml = "^6.0.1"
+types-pyyaml = "^6.0.12.12"
 
 [tool.poetry.group.dev.dependencies]
 beautifulsoup4 = "^4.12.2"
 lxml = "^4.9.3"
 ruff = "^0.1.6"
+mypy = "^1.7.0"
 
 [build-system]
 requires = ["poetry-core"]

@@ -256,9 +256,9 @@ class Resource(BaseModel):
             )
             for parameter in self.parameters
         ]
-        fields_with_indentation = ["\t" + field for field in fields]
+        fields_with_indentation = [" " * 4 + field for field in fields]
         if not fields_with_indentation:
-            body = "\tpass\n"
+            body = " " * 4 + "pass\n"
         else:
             body = "\n".join(fields_with_indentation)
         return head + body
