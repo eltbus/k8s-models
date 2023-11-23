@@ -95,7 +95,7 @@ def map_kind_to_type(kind: str) -> str:
 
 def convert_invalid_parameter_name(name: str) -> str:
     match name:
-        # Python reserved works
+        # Python reserved words
         case "continue":
             return "keep_on"
         case "except":
@@ -104,6 +104,9 @@ def convert_invalid_parameter_name(name: str) -> str:
             return "sources"
         case "not":
             return "nay"
+        # Pydantic reserved words (mypy complains)
+        case "schema":
+            return "validation_schema"
         # Invalid starting character
         case "$ref":
             return "json_schema_ref"
