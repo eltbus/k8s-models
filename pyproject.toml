@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "k8s-models"
-version = "0.1.1a1"
+version = "0.1.1a2"
 description = ""
 authors = ["eltbus <33374178+eltbus@users.noreply.github.com>"]
 readme = "README.md"

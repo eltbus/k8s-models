@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
 from k8s_models.definitions.authorization_k8s_io import (
     NonResourceAttributes,
     ResourceAttributes,

@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import List
 
 from pydantic import BaseModel, Field
+
 from k8s_models.definitions.meta import Time
 from k8s_models.definitions.authentication_k8s_io import UserInfo, BoundObjectReference
 

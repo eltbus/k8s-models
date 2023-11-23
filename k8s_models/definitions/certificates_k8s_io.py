@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pydantic import BaseModel, Field
+
 from k8s_models.definitions.meta import Time
 
 class CertificateSigningRequestCondition(BaseModel):
