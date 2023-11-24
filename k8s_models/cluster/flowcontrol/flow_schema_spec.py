@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.flow_distinguisher_method import FlowDistinguisherMethod
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.priority_level_configuration_reference import PriorityLevelConfigurationReference
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.policy_rules_with_subjects import PolicyRulesWithSubjects
 
 
 class FlowSchemaSpec(BaseModel):

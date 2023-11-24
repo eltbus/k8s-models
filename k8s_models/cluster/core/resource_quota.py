@@ -2,6 +2,10 @@ from pydantic import Field
 
 from k8s_models.models import KubeModel
 
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.cluster.core.resource_quota_spec import ResourceQuotaSpec
+from k8s_models.cluster.core.resource_quota_status import ResourceQuotaStatus
+
 
 class ResourceQuota(KubeModel):
     apiVersion: str = Field(default="v1", description=r""" APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources """)

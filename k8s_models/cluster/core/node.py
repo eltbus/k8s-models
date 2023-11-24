@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.cluster.core.node_spec import NodeSpec
+from k8s_models.cluster.core.node_status import NodeStatus
 
 
 class Node(KubeModel):

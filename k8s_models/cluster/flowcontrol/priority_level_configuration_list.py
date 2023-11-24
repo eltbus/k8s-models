@@ -1,6 +1,10 @@
+from typing import List
+
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.cluster.flowcontrol_apiserver_k8s_io.priority_level_configuration import PriorityLevelConfiguration
+from k8s_models.definitions.meta.list_meta import ListMeta
 
 
 class PriorityLevelConfigurationList(KubeModel):

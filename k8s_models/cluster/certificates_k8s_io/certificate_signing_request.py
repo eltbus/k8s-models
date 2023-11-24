@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.cluster.certificates.certificate_signing_request_spec import CertificateSigningRequestSpec
+from k8s_models.cluster.certificates.certificate_signing_request_status import CertificateSigningRequestStatus
 
 
 class CertificateSigningRequest(KubeModel):

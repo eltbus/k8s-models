@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.time import Time
+
 
 class PersistentVolumeStatus(BaseModel):
     lastPhaseTransitionTime: Time = Field(default=None, description=r""" lastPhaseTransitionTime is the time the phase transitioned from one to another and automatically resets to current time everytime a volume phase transitions. This is an alpha field and requires enabling PersistentVolumeLastPhaseTransitionTime feature. """)

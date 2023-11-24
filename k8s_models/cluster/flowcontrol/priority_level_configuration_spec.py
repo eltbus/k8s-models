@@ -1,5 +1,8 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.exempt_priority_level_configuration import ExemptPriorityLevelConfiguration
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.limited_priority_level_configuration import LimitedPriorityLevelConfiguration
+
 
 class PriorityLevelConfigurationSpec(BaseModel):
     exempt: ExemptPriorityLevelConfiguration = Field(default=None, description=r""" `exempt` specifies how requests are handled for an exempt priority level. This field MUST be empty if `type` is `"Limited"`. This field MAY be non-empty if `type` is `"Exempt"`. If empty and `type` is `"Exempt"` then the default values for `ExemptPriorityLevelConfiguration` apply. """)

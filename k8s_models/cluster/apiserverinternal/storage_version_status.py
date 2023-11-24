@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+from k8s_models.definitions.internal_apiserver_k8s_io.server_storage_version import ServerStorageVersion
+from k8s_models.definitions.internal_apiserver_k8s_io.storage_version_condition import StorageVersionCondition
 
 
 class StorageVersionStatus(BaseModel):

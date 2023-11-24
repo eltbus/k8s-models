@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.micro_time import MicroTime
+
 
 class LeaseSpec(BaseModel):
     acquireTime: MicroTime = Field(default=None, description=r""" acquireTime is a time when the current lease was acquired. """)

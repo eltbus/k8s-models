@@ -1,4 +1,13 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+from k8s_models.definitions.core.node_address import  NodeAddress
+from k8s_models.definitions.core.node_condition import NodeCondition
+from k8s_models.definitions.core.node_config_status import NodeConfigStatus
+from k8s_models.definitions.core.node_daemon_endpoints import NodeDaemonEndpoints
+from k8s_models.definitions.core.container_image import ContainerImage
+from k8s_models.definitions.core.node_system_info import NodeSystemInfo
+from k8s_models.definitions.core.attached_volume import AttachedVolume
 
 
 class NodeStatus(BaseModel):

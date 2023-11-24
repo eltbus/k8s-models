@@ -1,6 +1,10 @@
+from typing import List
+
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.cluster.rbac_authorization_k8s_io.cluster_role_binding import ClusterRoleBinding
+from k8s_models.definitions.meta.list_meta import ListMeta
 
 
 class ClusterRoleBindingList(KubeModel):

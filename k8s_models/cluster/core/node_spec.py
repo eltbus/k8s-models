@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+from k8s_models.definitions.core.node_config_source import NodeConfigSource
+from k8s_models.definitions.core.taint import Taint
 
 
 class NodeSpec(BaseModel):

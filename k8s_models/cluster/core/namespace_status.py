@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.namespace_condition import NamespaceCondition
 
 
 class NamespaceStatus(BaseModel):
