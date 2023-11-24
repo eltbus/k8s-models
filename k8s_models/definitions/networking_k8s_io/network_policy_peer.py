@@ -1,5 +1,8 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.networking_k8s_io.ip_block import IPBlock
+from k8s_models.definitions.meta.label_selector import LabelSelector
+
 
 class NetworkPolicyPeer(BaseModel):
     ipBlock: IPBlock = Field(default=None, description=r""" ipBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be. """)

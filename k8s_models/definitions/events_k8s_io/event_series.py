@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.micro_time import MicroTime
+
 
 class EventSeries(BaseModel):
     count: int = Field(default=None, description=r""" count is the number of occurrences in this series up to the last heartbeat time. """)

@@ -1,5 +1,9 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.batch.pod_failure_policy import PodFailurePolicy
+from k8s_models.definitions.meta.label_selector import LabelSelector
+from k8s_models.metadata.core.pod_template_spec import PodTemplateSpec
+
 
 class JobSpec(BaseModel):
     activeDeadlineSeconds: int = Field(default=None, description=r""" Specifies the duration in seconds relative to the startTime that the job may be continuously active before the system tries to terminate it; value must be positive integer. If a Job is suspended (at creation or through an update), this timer will effectively be stopped and reset when the Job is resumed again. """)

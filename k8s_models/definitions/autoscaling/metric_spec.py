@@ -1,5 +1,11 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.autoscaling.container_resource_metric_source import ContainerResourceMetricSource
+from k8s_models.definitions.autoscaling.external_metric_source import ExternalMetricSource
+from k8s_models.definitions.autoscaling.object_metric_source import ObjectMetricSource
+from k8s_models.definitions.autoscaling.pods_metric_source import PodsMetricSource
+from k8s_models.definitions.autoscaling.resource_metric_source import ResourceMetricSource
+
 
 class MetricSpec(BaseModel):
     containerResource: ContainerResourceMetricSource = Field(default=None, description=r""" containerResource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag. """)

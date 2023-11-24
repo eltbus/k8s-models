@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.time import Time
+
 
 class CertificateSigningRequestCondition(BaseModel):
     lastTransitionTime: Time = Field(default=None, description=r""" lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time. """)

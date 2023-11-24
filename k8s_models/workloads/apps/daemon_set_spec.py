@@ -1,5 +1,9 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.label_selector import LabelSelector
+from k8s_models.metadata.core.pod_template_spec import PodTemplateSpec
+from k8s_models.definitions.apps.daemon_set_update_strategy import DaemonSetUpdateStrategy
+
 
 class DaemonSetSpec(BaseModel):
     minReadySeconds: int = Field(default=None, description=r""" The minimum number of seconds for which a newly created DaemonSet pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready). """)

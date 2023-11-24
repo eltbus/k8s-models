@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.volume_projection import VolumeProjection
 
 
 class ProjectedVolumeSource(BaseModel):

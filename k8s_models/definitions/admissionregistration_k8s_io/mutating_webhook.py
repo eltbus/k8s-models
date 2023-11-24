@@ -1,4 +1,11 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.admissionregistration_k8s_io.webhook_client_config import WebhookClientConfig
+from k8s_models.definitions.admissionregistration_k8s_io.match_condition import MatchCondition
+from k8s_models.definitions.meta.label_selector import LabelSelector
+from k8s_models.definitions.admissionregistration_k8s_io.rule_with_operations import RuleWithOperations
 
 
 class MutatingWebhook(BaseModel):

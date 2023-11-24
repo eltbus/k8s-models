@@ -1,4 +1,8 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.meta.label_selector import LabelSelector
 
 
 class PodDisruptionBudgetSpec(BaseModel):

@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.time import Time
+
 
 class Condition(BaseModel):
     lastTransitionTime: Time = Field(default=None, description=r""" lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable. """)

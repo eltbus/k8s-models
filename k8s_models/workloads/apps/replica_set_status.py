@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.apps.replica_set_condition import ReplicaSetCondition
 
 
 class ReplicaSetStatus(BaseModel):

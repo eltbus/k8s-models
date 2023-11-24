@@ -1,4 +1,12 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.pod_condition import PodCondition
+from k8s_models.workloads.core.container_status import ContainerStatus
+from k8s_models.definitions.core.host_ip import HostIP
+from k8s_models.definitions.core.pod_ip import PodIP
+from k8s_models.definitions.meta.time import Time
 
 
 class PodStatus(BaseModel):

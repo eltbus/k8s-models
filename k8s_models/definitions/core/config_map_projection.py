@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.key_to_path import KeyToPath
 
 
 class ConfigMapProjection(BaseModel):

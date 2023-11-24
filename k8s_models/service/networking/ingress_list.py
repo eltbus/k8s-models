@@ -1,6 +1,10 @@
+from typing import List
+
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.service.networking_k8s_io.ingress import Ingress
+from k8s_models.definitions.meta.list_meta import ListMeta
 
 
 class IngressList(KubeModel):

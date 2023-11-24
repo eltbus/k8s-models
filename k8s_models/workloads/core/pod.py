@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.workloads.core.pod_spec import PodSpec
+from k8s_models.workloads.core.pod_status import PodStatus
 
 
 class Pod(KubeModel):

@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.batch.job_template_spec import JobTemplateSpec
+
 
 class CronJobSpec(BaseModel):
     concurrencyPolicy: str = Field(default=None, description=r""" Specifies how to treat concurrent executions of a Job. Valid values are:  - "Allow" (default): allows CronJobs to run concurrently; - "Forbid": forbids concurrent runs, skipping next run if previous run hasn't finished yet; - "Replace": cancels currently running job and replaces it with a new one """)

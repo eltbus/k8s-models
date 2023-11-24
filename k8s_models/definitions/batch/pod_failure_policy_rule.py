@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.batch.pod_failure_policy_on_exit_codes_requirement import PodFailurePolicyOnExitCodesRequirement
+from k8s_models.definitions.batch.pod_failure_policy_on_pod_conditions_pattern import PodFailurePolicyOnPodConditionsPattern
 
 
 class PodFailurePolicyRule(BaseModel):

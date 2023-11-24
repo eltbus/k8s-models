@@ -1,6 +1,8 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.status_details import StatusDetails
+from k8s_models.definitions.meta.list_meta import ListMeta
 
 
 class Status(KubeModel):

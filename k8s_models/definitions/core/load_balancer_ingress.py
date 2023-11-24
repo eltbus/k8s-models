@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.port_status import PortStatus
 
 
 class LoadBalancerIngress(BaseModel):

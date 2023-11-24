@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from k8s_models.definitions.apiextensions_k8s_io.webhook_conversion import WebhookConversion
 
 
 class CustomResourceConversion(BaseModel):

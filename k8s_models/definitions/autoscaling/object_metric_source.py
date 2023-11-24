@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.autoscaling.cross_version_object_reference import CrossVersionObjectReference
+from k8s_models.definitions.autoscaling.metric_identifier import MetricIdentifier
+from k8s_models.definitions.autoscaling.metric_target import MetricTarget
 
 
 class ObjectMetricSource(KubeModel):

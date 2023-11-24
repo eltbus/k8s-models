@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.resource_k8s_io.allocation_result import AllocationResult
+from k8s_models.definitions.resource_k8s_io.resource_claim_consumer_reference import ResourceClaimConsumerReference
 
 
 class ResourceClaimStatus(BaseModel):

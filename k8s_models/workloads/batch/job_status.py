@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.meta.time import Time
+from k8s_models.definitions.batch.job_condition import JobCondition
+from k8s_models.definitions.batch.uncounted_terminated_pods import UncountedTerminatedPods
 
 
 class JobStatus(BaseModel):

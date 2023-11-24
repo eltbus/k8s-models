@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.admissionregistration_k8s_io.match_resources import MatchResources
+from k8s_models.definitions.admissionregistration_k8s_io.param_ref import ParamRef
 
 
 class ValidatingAdmissionPolicyBindingSpec(BaseModel):

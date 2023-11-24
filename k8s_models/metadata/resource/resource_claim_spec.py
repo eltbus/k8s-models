@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.resource_k8s_io.resource_claim_parameters_reference import ResourceClaimParametersReference
+
 
 class ResourceClaimSpec(BaseModel):
     allocationMode: str = Field(default=None, description=r""" Allocation can start immediately or when a Pod wants to use the resource. "WaitForFirstConsumer" is the default. """)

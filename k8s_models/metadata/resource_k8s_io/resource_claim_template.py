@@ -1,6 +1,8 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.metadata.resource.resource_claim_template_spec import ResourceClaimTemplateSpec
 
 
 class ResourceClaimTemplate(KubeModel):

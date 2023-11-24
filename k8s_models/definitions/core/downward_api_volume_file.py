@@ -1,5 +1,8 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.object_field_selector import ObjectFieldSelector
+from k8s_models.definitions.core.resource_field_selector import ResourceFieldSelector
+
 
 class DownwardAPIVolumeFile(BaseModel):
     fieldRef: ObjectFieldSelector = Field(default=None, description=r""" Required: Selects a field of the pod: only annotations, labels, name and namespace are supported. """)

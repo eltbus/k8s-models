@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.networking_k8s_io.network_policy_peer import NetworkPolicyPeer
+from k8s_models.definitions.networking_k8s_io.network_policy_port import NetworkPolicyPort
 
 
 class NetworkPolicyIngressRule(BaseModel):

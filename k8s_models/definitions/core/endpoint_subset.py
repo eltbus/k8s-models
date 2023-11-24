@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.endpoint_address import EndpointAddress
+from k8s_models.definitions.core.endpoint_port import EndpointPort
 
 
 class EndpointSubset(BaseModel):

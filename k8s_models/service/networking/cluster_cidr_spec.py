@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.node_selector import NodeSelector
+
 
 class ClusterCIDRSpec(BaseModel):
     ipv4: str = Field(default=None, description=r""" ipv4 defines an IPv4 IP block in CIDR notation(e.g. "10.0.0.0/8"). At least one of ipv4 and ipv6 must be specified. This field is immutable. """)

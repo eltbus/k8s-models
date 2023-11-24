@@ -1,6 +1,10 @@
+from typing import List
+
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.group_version_for_discovery import GroupVersionForDiscovery
+from k8s_models.definitions.meta.server_address_by_client_cidr import ServerAddressByClientCIDR
 
 
 class APIGroup(KubeModel):

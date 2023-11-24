@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.object_reference import ObjectReference
+from k8s_models.definitions.meta.time import Time
 
 
 class CronJobStatus(BaseModel):

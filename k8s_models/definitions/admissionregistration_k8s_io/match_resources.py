@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.admissionregistration_k8s_io.named_rule_with_operations import NamedRuleWithOperations
+from k8s_models.definitions.meta.label_selector import LabelSelector
 
 
 class MatchResources(BaseModel):

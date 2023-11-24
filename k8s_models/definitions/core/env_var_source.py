@@ -1,5 +1,10 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.config_map_key_selector import ConfigMapKeySelector
+from k8s_models.definitions.core.object_field_selector import ObjectFieldSelector
+from k8s_models.definitions.core.resource_field_selector import ResourceFieldSelector
+from k8s_models.definitions.core.secret_key_selector import SecretKeySelector
+
 
 class EnvVarSource(BaseModel):
     configMapKeyRef: ConfigMapKeySelector = Field(default=None, description=r""" Selects a key of a ConfigMap. """)

@@ -1,5 +1,8 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.container_state import ContainerState
+from k8s_models.definitions.core.resource_requirements import ResourceRequirements
+
 
 class ContainerStatus(BaseModel):
     allocatedResources: dict = Field(default=None, description=r""" AllocatedResources represents the compute resources allocated for this container by the node. Kubelet sets this value to Container.Resources.Requests upon successful pod admission and after successfully admitting desired pod resize. """)

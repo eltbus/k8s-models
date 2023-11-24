@@ -1,4 +1,17 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.env_var import EnvVar
+from k8s_models.definitions.core.env_from_source import EnvFromSource
+from k8s_models.definitions.core.lifecycle import Lifecycle
+from k8s_models.definitions.core.probe import Probe
+from k8s_models.definitions.core.container_resize_policy import ContainerResizePolicy
+from k8s_models.definitions.core.container_port import ContainerPort
+from k8s_models.definitions.core.resource_requirements import ResourceRequirements
+from k8s_models.definitions.core.security_context import SecurityContext
+from k8s_models.definitions.core.volume_device import VolumeDevice
+from k8s_models.definitions.core.volume_mount import VolumeMount
 
 
 class Container(BaseModel):

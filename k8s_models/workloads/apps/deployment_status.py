@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.apps.deployment_condition import DeploymentCondition
 
 
 class DeploymentStatus(BaseModel):

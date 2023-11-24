@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.meta.condition import Condition
+from k8s_models.definitions.admissionregistration_k8s_io.type_checking import TypeChecking
 
 
 class ValidatingAdmissionPolicyStatus(BaseModel):

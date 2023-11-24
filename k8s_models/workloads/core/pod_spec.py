@@ -1,4 +1,21 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.affinity import Affinity
+from k8s_models.workloads.core.container import Container
+from k8s_models.definitions.core.pod_dns_config import PodDNSConfig
+from k8s_models.definitions.core.ephemeral_container import EphemeralContainer
+from k8s_models.definitions.core.host_alias import HostAlias
+from k8s_models.definitions.core.local_object_reference import LocalObjectReference
+from k8s_models.definitions.core.pod_os import PodOS
+from k8s_models.definitions.core.pod_scheduling_gate import PodSchedulingGate
+from k8s_models.definitions.core.pod_security_context import PodSecurityContext
+from k8s_models.definitions.core.toleration import Toleration
+from k8s_models.definitions.core.topology_spread_constraint import TopologySpreadConstraint
+from k8s_models.config_and_storage.core.volume import Volume
+from k8s_models.definitions.core.pod_readiness_gate import PodReadinessGate
+from k8s_models.definitions.core.pod_resource_claim import PodResourceClaim
 
 
 class PodSpec(BaseModel):

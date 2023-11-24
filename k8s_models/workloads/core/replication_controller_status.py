@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.replication_controller_condition import ReplicationControllerCondition
 
 
 class ReplicationControllerStatus(BaseModel):

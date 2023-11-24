@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.storage_k8s_io.volume_node_resources import VolumeNodeResources
 
 
 class CSINodeDriver(BaseModel):

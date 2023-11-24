@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import List, Iterator, Optional
+import re
 
 from bs4 import BeautifulSoup, Tag
+from inflection import underscore
 from pydantic import BaseModel, Field
 
 
@@ -243,13 +245,29 @@ class Resource(BaseModel):
         return cls(kind=kind, version=version, group=group, parameters=parameters)
 
     def repr_as_pydantic_model(self) -> str:
-        head = f"class {self.kind}(BaseModel):\n"
         fields = [
             parameter.repr_as_pydantic_field(
                 resource_kind=self.kind, resource_version=self.version
             )
             for parameter in self.parameters
         ]
+        # Calculate head
+        match_api_version = any(re.search("apiVersion", field) for field in fields)
+        match_kind = any(re.search("kind", field) for field in fields)
+        if match_api_version and match_kind:
+            head_lines = [
+                "from pydantic import Field\n",
+                "from k8s_models.models import KubeModel\n\n",
+                f"class {self.kind}(KubeModel):\n",
+            ]
+        else:
+            head_lines = [
+                "from pydantic import BaseModel, Field\n\n",
+                f"class {self.kind}(BaseModel):\n",
+            ]
+        head = "\n".join(head_lines)
+
+        # Calculate body
         fields_with_indentation = [" " * 4 + field for field in fields]
         if not fields_with_indentation:
             body = " " * 4 + "pass\n"
@@ -269,10 +287,24 @@ class Resource(BaseModel):
         module_init_file_path.touch(exist_ok=True)
         return path
 
-    def add_to_module(self, root: Path, module_name: str):
-        path = self.create_module(root=root, module_name=module_name)
-        with open(path, "a") as f:
-            f.write("\n")
+    def touch_file(self, root: Path, module_name: str) -> Path:
+        module_path = root / module_name
+        submodule_path = module_path / self.group.replace(".", "_")
+        filepath = submodule_path / (underscore(self.kind) + ".py")
+        
+        # Create folder
+        if not filepath.parent.exists():
+            filepath.parent.mkdir(parents=True, exist_ok=True)
+        # Create __init__ files
+        module_init_file_path = module_path / "__init__.py"
+        module_init_file_path.touch(exist_ok=True)
+        submodule_init_file_path = submodule_path / "__init__.py"
+        submodule_init_file_path.touch(exist_ok=True)
+        return filepath
+
+    def write_file(self, root: Path, module_name: str):
+        filepath = self.touch_file(root=root, module_name=module_name)
+        with open(filepath, "w") as f:
             f.write(self.repr_as_pydantic_model())
             f.write("\n")
 
@@ -388,12 +420,32 @@ def main():
     root.mkdir(exist_ok=True)
     package_init_file_path = root / "__init__.py"
     package_init_file_path.touch(exist_ok=True)
+
     for api in gen_apis_from_kubernetes_docs(soup):
         for resource in api.resources:
-            resource.add_to_module(root=root, module_name=api.module_name)
+            resource.write_file(root=root, module_name=api.module_name)
 
     for definition in gen_definitions_from_kubernetes_docs(soup):
-        definition.add_to_module(root=root, module_name="definitions")
+        definition.write_file(root=root, module_name="definitions")
+
+    package_model_helper_file_path = root / "models.py"
+    with open(package_model_helper_file_path, "w") as f:
+        lines = [
+            "from pydantic import BaseModel\n",
+            "from yaml import safe_dump\n",
+            "class KubeModel(BaseModel):\n",
+            " " * 4 + "def model_to_yaml(self):",
+            " " * 8 + "model_data = self.model_dump(by_alias=True, exclude_none=True)",
+            " " * 8 + "return safe_dump(",
+            " " * 12 + "data=model_data,",
+            " " * 12 + "sort_keys=False,",
+            " " * 12 + "default_flow_style=False,",
+            " " * 12 + "indent=2,",
+            " " * 12 + "allow_unicode=True,",
+            " " * 12 + "explicit_start=True",
+            " " * 8 + ")",
+        ]
+        f.write("\n".join(lines))
 
 
 if __name__ == "__main__":

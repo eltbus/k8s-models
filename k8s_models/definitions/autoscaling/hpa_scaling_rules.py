@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.autoscaling.hpa_scaling_policy import HPAScalingPolicy
 
 
 class HPAScalingRules(BaseModel):

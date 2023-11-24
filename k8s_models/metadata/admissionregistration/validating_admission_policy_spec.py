@@ -1,4 +1,13 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.admissionregistration_k8s_io.audit_annotation import AuditAnnotation
+from k8s_models.definitions.admissionregistration_k8s_io.match_condition import MatchCondition
+from k8s_models.definitions.admissionregistration_k8s_io.match_resources import MatchResources
+from k8s_models.definitions.admissionregistration_k8s_io.param_kind import ParamKind
+from k8s_models.definitions.admissionregistration_k8s_io.validation import Validation
+from k8s_models.definitions.admissionregistration_k8s_io.variable import Variable
 
 
 class ValidatingAdmissionPolicySpec(BaseModel):

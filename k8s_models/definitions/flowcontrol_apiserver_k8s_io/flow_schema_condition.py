@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.time import Time
+
 
 class FlowSchemaCondition(BaseModel):
     lastTransitionTime: Time = Field(default=None, description=r""" `lastTransitionTime` is the last time the condition transitioned from one status to another. """)

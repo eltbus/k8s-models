@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.time import Time
+
 
 class ContainerStateTerminated(BaseModel):
     containerID: str = Field(default=None, description=r""" Container's ID in the format '<type>://<container_id>' """)

@@ -1,6 +1,11 @@
+from typing import List
+
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_conversion import CustomResourceConversion
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_definition_names import CustomResourceDefinitionNames
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_definition_version import CustomResourceDefinitionVersion
 
 
 class CustomResourceDefinitionSpec(KubeModel):

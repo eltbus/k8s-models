@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.workloads.batch.job_spec import JobSpec
+from k8s_models.workloads.batch.job_status import JobStatus
 
 
 class Job(KubeModel):

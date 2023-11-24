@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.resource_k8s_io.resource_claim_scheduling_status import ResourceClaimSchedulingStatus
 
 
 class PodSchedulingContextStatus(BaseModel):

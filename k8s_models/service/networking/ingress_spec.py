@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.networking_k8s_io.ingress_backend import IngressBackend
+from k8s_models.definitions.networking_k8s_io.ingress_rule import IngressRule
+from k8s_models.definitions.networking_k8s_io.ingress_tls import IngressTLS
 
 
 class IngressSpec(BaseModel):

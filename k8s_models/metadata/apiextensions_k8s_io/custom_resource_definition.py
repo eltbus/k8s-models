@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.metadata.apiextensions.custom_resource_definition_spec import CustomResourceDefinitionSpec
+from k8s_models.metadata.apiextensions.custom_resource_definition_status import CustomResourceDefinitionStatus
 
 
 class CustomResourceDefinition(KubeModel):

@@ -1,5 +1,10 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.exec_action import ExecAction
+from k8s_models.definitions.core.grpc_action import GRPCAction
+from k8s_models.definitions.core.http_get_action import HTTPGetAction
+from k8s_models.definitions.core.tcp_socket_action import TCPSocketAction
+
 
 class Probe(BaseModel):
     exec: ExecAction = Field(default=None, description=r""" Exec specifies the action to take. """)

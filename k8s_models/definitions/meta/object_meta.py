@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.meta.time import Time
+from k8s_models.definitions.meta.managed_fields_entry import ManagedFieldsEntry
+from k8s_models.definitions.meta.owner_reference import OwnerReference
 
 
 class ObjectMeta(BaseModel):

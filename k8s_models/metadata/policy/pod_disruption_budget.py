@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.metadata.policy.pod_disruption_budget_spec import PodDisruptionBudgetSpec
+from k8s_models.metadata.policy.pod_disruption_budget_status import PodDisruptionBudgetStatus
 
 
 class PodDisruptionBudget(KubeModel):

@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.autoscaling.horizontal_pod_autoscaler_behavior import HorizontalPodAutoscalerBehavior
+from k8s_models.definitions.autoscaling.metric_spec import MetricSpec
+from k8s_models.definitions.autoscaling.cross_version_object_reference import CrossVersionObjectReference
 
 
 class HorizontalPodAutoscalerSpec(BaseModel):

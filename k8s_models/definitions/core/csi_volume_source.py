@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.local_object_reference import LocalObjectReference
+
 
 class CSIVolumeSource(BaseModel):
     driver: str = Field(default=None, description=r""" driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster. """)

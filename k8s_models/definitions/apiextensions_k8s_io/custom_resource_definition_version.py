@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_column_definition import CustomResourceColumnDefinition
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_validation import CustomResourceValidation
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_subresources import CustomResourceSubresources
 
 
 class CustomResourceDefinitionVersion(BaseModel):

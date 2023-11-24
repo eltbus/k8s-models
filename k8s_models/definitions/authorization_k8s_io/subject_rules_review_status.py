@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.authorization_k8s_io.non_resource_rule import NonResourceRule
+from k8s_models.definitions.authorization_k8s_io.resource_rule import ResourceRule
 
 
 class SubjectRulesReviewStatus(BaseModel):

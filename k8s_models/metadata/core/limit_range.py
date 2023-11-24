@@ -1,6 +1,8 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.metadata.core.limit_range_spec import LimitRangeSpec
 
 
 class LimitRange(KubeModel):

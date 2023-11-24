@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.queuing_configuration import QueuingConfiguration
+
 
 class LimitResponse(BaseModel):
     queuing: QueuingConfiguration = Field(default=None, description=r""" `queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `"Queue"`. """)

@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.autoscaling.metric_value_status import MetricValueStatus
+from k8s_models.definitions.autoscaling.cross_version_object_reference import CrossVersionObjectReference
+from k8s_models.definitions.autoscaling.metric_identifier import MetricIdentifier
 
 
 class ObjectMetricStatus(KubeModel):

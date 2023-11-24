@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.meta.label_selector_requirement import LabelSelectorRequirement
 
 
 class LabelSelector(BaseModel):

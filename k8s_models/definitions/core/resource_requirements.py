@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+
+from k8s_models.definitions.core.resource_claim import ResourceClaim
 
 
 class ResourceRequirements(BaseModel):

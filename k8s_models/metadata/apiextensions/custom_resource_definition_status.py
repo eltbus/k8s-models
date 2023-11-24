@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_definition_names import CustomResourceDefinitionNames
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_definition_condition import CustomResourceDefinitionCondition
 
 
 class CustomResourceDefinitionStatus(BaseModel):

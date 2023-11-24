@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.workloads.apps.daemon_set_spec import DaemonSetSpec
+from k8s_models.workloads.apps.daemon_set_status import DaemonSetStatus
 
 
 class DaemonSet(KubeModel):

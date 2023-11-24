@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.label_selector import LabelSelector
+
 
 class MetricIdentifier(BaseModel):
     name: str = Field(default=None, description=r""" name is the name of the given metric """)

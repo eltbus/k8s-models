@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.meta.condition import Condition
+from k8s_models.definitions.core.load_balancer_status import LoadBalancerStatus
 
 
 class ServiceStatus(BaseModel):

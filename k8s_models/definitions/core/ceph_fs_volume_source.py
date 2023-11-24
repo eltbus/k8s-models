@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.local_object_reference import LocalObjectReference
 
 
 class CephFSVolumeSource(BaseModel):

@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.workloads.core.replication_controller_spec import ReplicationControllerSpec
+from k8s_models.workloads.core.replication_controller_status import ReplicationControllerStatus
 
 
 class ReplicationController(KubeModel):

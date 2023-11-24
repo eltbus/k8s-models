@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.object_reference import ObjectReference
+
 
 class EndpointAddress(BaseModel):
     hostname: str = Field(default=None, description=r""" The Hostname of this endpoint """)

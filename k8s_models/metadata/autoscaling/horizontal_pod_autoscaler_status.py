@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.autoscaling.horizontal_pod_autoscaler_condition import HorizontalPodAutoscalerCondition
+from k8s_models.definitions.autoscaling.metric_status import MetricStatus
+from k8s_models.definitions.meta.time import Time
 
 
 class HorizontalPodAutoscalerStatus(BaseModel):

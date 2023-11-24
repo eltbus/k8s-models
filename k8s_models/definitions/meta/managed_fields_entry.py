@@ -1,5 +1,8 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.fields_v1 import FieldsV1
+from k8s_models.definitions.meta.time import Time
+
 
 class ManagedFieldsEntry(BaseModel):
     apiVersion: str = Field(default="v1", description=r""" APIVersion defines the version of this resource that this field set applies to. The format is "group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted. """)

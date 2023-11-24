@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.non_resource_policy_rule import NonResourcePolicyRule
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.resource_policy_rule import ResourcePolicyRule
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.subject import Subject
 
 
 class PolicyRulesWithSubjects(BaseModel):

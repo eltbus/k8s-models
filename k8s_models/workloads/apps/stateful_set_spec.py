@@ -1,4 +1,13 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.apps.stateful_set_ordinals import StatefulSetOrdinals
+from k8s_models.definitions.apps.stateful_set_persistent_volume_claim_retention_policy import StatefulSetPersistentVolumeClaimRetentionPolicy
+from k8s_models.definitions.meta.label_selector import LabelSelector
+from k8s_models.metadata.core.pod_template_spec import PodTemplateSpec
+from k8s_models.definitions.apps.stateful_set_update_strategy import StatefulSetUpdateStrategy
+from k8s_models.config_and_storage.core.persistent_volume_claim import PersistentVolumeClaim
 
 
 class StatefulSetSpec(BaseModel):

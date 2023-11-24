@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.admissionregistration_k8s_io.service_reference import ServiceReference
+
 
 class WebhookClientConfig(BaseModel):
     caBundle: str = Field(default=None, description=r""" `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used. """)

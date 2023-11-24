@@ -1,4 +1,6 @@
 from pydantic import BaseModel, Field
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_subresource_scale import CustomResourceSubresourceScale
+from k8s_models.definitions.apiextensions_k8s_io.custom_resource_subresource_status import CustomResourceSubresourceStatus
 
 
 class CustomResourceSubresources(BaseModel):

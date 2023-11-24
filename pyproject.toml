@@ -17,6 +17,8 @@ lxml = "^4.9.3"
 ruff = "^0.1.6"
 mypy = "^1.7.0"
 types-beautifulsoup4 = "^4.12.0.7"
+pydeps = "^1.12.17"
+inflection = "^0.5.1"
 
 [build-system]
 requires = ["poetry-core"]
