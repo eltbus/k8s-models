@@ -1,6 +1,8 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.config_and_storage.storage.csi_node_spec import CSINodeSpec
 
 
 class CSINode(KubeModel):

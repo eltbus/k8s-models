@@ -1,5 +1,35 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.aws_elastic_block_store_volume_source import AWSElasticBlockStoreVolumeSource
+from k8s_models.definitions.core.azure_disk_volume_source import AzureDiskVolumeSource
+from k8s_models.definitions.core.azure_file_volume_source import AzureFileVolumeSource
+from k8s_models.definitions.core.ceph_fs_volume_source import CephFSVolumeSource
+from k8s_models.definitions.core.cinder_volume_source import CinderVolumeSource
+from k8s_models.definitions.core.config_map_volume_source import ConfigMapVolumeSource
+from k8s_models.definitions.core.csi_volume_source import CSIVolumeSource
+from k8s_models.definitions.core.downward_api_volume_source import DownwardAPIVolumeSource
+from k8s_models.definitions.core.empty_dir_volume_source import EmptyDirVolumeSource
+from k8s_models.definitions.core.ephemeral_volume_source import EphemeralVolumeSource
+from k8s_models.definitions.core.fc_volume_source import FCVolumeSource
+from k8s_models.definitions.core.flex_volume_source import FlexVolumeSource
+from k8s_models.definitions.core.flocker_volume_source import FlockerVolumeSource
+from k8s_models.definitions.core.gce_persistent_disk_volume_source import GCEPersistentDiskVolumeSource
+from k8s_models.definitions.core.git_repo_volume_source import GitRepoVolumeSource
+from k8s_models.definitions.core.glusterfs_volume_source import GlusterfsVolumeSource
+from k8s_models.definitions.core.host_path_volume_source import HostPathVolumeSource
+from k8s_models.definitions.core.iscsi_volume_source import ISCSIVolumeSource
+from k8s_models.definitions.core.nfs_volume_source import NFSVolumeSource
+from k8s_models.definitions.core.persistent_volume_claim_volume_source import PersistentVolumeClaimVolumeSource
+from k8s_models.definitions.core.photon_persistent_disk_volume_source import PhotonPersistentDiskVolumeSource
+from k8s_models.definitions.core.portworx_volume_source import PortworxVolumeSource
+from k8s_models.definitions.core.projected_volume_source import ProjectedVolumeSource
+from k8s_models.definitions.core.quobyte_volume_source import QuobyteVolumeSource
+from k8s_models.definitions.core.rbd_volume_source import RBDVolumeSource
+from k8s_models.definitions.core.scale_io_volume_source import ScaleIOVolumeSource
+from k8s_models.definitions.core.secret_volume_source import SecretVolumeSource
+from k8s_models.definitions.core.storage_os_volume_source import StorageOSVolumeSource
+from k8s_models.definitions.core.vsphere_virtual_disk_volume_source import VsphereVirtualDiskVolumeSource
+
 
 class Volume(BaseModel):
     awsElasticBlockStore: AWSElasticBlockStoreVolumeSource = Field(default=None, description=r""" awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore """)

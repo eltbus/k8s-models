@@ -1,6 +1,10 @@
+from typing import List
+
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.list_meta import ListMeta
+from k8s_models.config_and_storage.storage_k8s_io.csi_node import CSINode
 
 
 class CSINodeList(KubeModel):

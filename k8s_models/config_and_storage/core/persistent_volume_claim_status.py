@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.persistent_volume_claim_condition import PersistentVolumeClaimCondition
 
 
 class PersistentVolumeClaimStatus(BaseModel):

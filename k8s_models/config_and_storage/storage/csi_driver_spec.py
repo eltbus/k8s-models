@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.cluster.authentication_k8s_io.token_request import TokenRequest
 
 
 class CSIDriverSpec(BaseModel):

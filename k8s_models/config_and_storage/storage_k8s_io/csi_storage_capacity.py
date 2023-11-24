@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.definitions.core.quantity import Quantity
+from k8s_models.definitions.meta.label_selector import LabelSelector
 
 
 class CSIStorageCapacity(KubeModel):

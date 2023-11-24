@@ -1,4 +1,11 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.typed_local_object_reference import TypedLocalObjectReference
+from k8s_models.definitions.core.typed_object_reference import TypedObjectReference
+from k8s_models.definitions.core.resource_requirements import ResourceRequirements
+from k8s_models.definitions.meta.label_selector import LabelSelector
 
 
 class PersistentVolumeClaimSpec(BaseModel):
