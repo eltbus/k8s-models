@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.cluster.authentication.token_review_spec import TokenReviewSpec
+from k8s_models.cluster.authentication.token_review_status import TokenReviewStatus
 
 
 class TokenReview(KubeModel):

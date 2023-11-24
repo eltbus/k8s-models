@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.networking_k8s_io.network_policy_egress_rule import NetworkPolicyEgressRule
+from k8s_models.definitions.networking_k8s_io.network_policy_ingress_rule import NetworkPolicyIngressRule
+from k8s_models.definitions.meta.label_selector import LabelSelector
 
 
 class NetworkPolicySpec(BaseModel):

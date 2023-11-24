@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.secret_reference import SecretReference
+
 
 class FlexPersistentVolumeSource(BaseModel):
     driver: str = Field(default=None, description=r""" driver is the name of the driver to use for this volume. """)

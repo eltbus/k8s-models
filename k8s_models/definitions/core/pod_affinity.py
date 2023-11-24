@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.weighted_pod_affinity_term import WeightedPodAffinityTerm
+from k8s_models.definitions.core.pod_affinity_term import PodAffinityTerm
 
 
 class PodAffinity(BaseModel):

@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.cluster.authentication.token_request_spec import TokenRequestSpec
+from k8s_models.cluster.authentication.token_request_status import TokenRequestStatus
 
 
 class TokenRequest(KubeModel):

@@ -1,6 +1,8 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.cluster.authentication.self_subject_review_status import SelfSubjectReviewStatus
 
 
 class SelfSubjectReview(KubeModel):

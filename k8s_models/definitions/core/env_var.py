@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.env_var_source import EnvVarSource
+
 
 class EnvVar(BaseModel):
     name: str = Field(default=None, description=r""" Name of the environment variable. Must be a C_IDENTIFIER. """)

@@ -1,6 +1,11 @@
+from typing import List
+
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.definitions.rbac_authorization_k8s_io.role_ref import RoleRef
+from k8s_models.definitions.flowcontrol_apiserver_k8s_io.subject import Subject
 
 
 class RoleBinding(KubeModel):

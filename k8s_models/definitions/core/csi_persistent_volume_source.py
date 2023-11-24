@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.secret_reference import SecretReference
+
 
 class CSIPersistentVolumeSource(BaseModel):
     controllerExpandSecretRef: SecretReference = Field(default=None, description=r""" controllerExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerExpandVolume call. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed. """)

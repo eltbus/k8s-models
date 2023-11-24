@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.time import Time
+
 
 class NodeCondition(BaseModel):
     lastHeartbeatTime: Time = Field(default=None, description=r""" Last time we got an update on a given condition. """)

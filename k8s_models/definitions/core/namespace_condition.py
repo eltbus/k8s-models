@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.time import Time
 
 class NamespaceCondition(BaseModel):
     lastTransitionTime: Time = Field(default=None)

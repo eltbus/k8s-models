@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.meta.time import Time
+
 
 class PersistentVolumeClaimCondition(BaseModel):
     lastProbeTime: Time = Field(default=None, description=r""" lastProbeTime is the time we probed the condition. """)

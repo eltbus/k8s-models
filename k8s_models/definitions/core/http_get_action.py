@@ -1,4 +1,8 @@
+from typing import List, Any
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.http_header import HTTPHeader
 
 
 class HTTPGetAction(BaseModel):

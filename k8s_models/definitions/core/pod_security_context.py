@@ -1,4 +1,11 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.se_linux_options import SELinuxOptions
+from k8s_models.definitions.core.seccomp_profile import SeccompProfile
+from k8s_models.definitions.core.sysctl import Sysctl
+from k8s_models.definitions.core.windows_security_context_options import WindowsSecurityContextOptions
 
 
 class PodSecurityContext(BaseModel):

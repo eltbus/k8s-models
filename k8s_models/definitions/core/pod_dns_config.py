@@ -1,4 +1,9 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.pod_dns_config_option import PodDNSConfigOption
+
 
 
 class PodDNSConfig(BaseModel):

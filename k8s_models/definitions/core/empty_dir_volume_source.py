@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.quantity import Quantity
+
 
 class EmptyDirVolumeSource(BaseModel):
     medium: str = Field(default=None, description=r""" medium represents what type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir """)

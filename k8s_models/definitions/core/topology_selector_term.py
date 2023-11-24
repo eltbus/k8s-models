@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.core.topology_selector_label_requirement import TopologySelectorLabelRequirement
 
 
 class TopologySelectorTerm(BaseModel):

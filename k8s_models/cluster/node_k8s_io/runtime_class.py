@@ -1,6 +1,9 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.definitions.node_k8s_io.overhead import Overhead
+from k8s_models.definitions.node_k8s_io.scheduling import Scheduling
 
 
 class RuntimeClass(KubeModel):

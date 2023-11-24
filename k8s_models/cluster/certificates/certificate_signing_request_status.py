@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.certificates_k8s_io.certificate_signing_request_condition import CertificateSigningRequestCondition
 
 
 class CertificateSigningRequestStatus(BaseModel):

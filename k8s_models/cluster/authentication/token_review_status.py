@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.authentication_k8s_io.user_info import UserInfo
 
 
 class TokenReviewStatus(BaseModel):

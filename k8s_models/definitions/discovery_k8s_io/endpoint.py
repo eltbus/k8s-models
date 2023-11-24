@@ -1,4 +1,10 @@
+from typing import List
+
 from pydantic import BaseModel, Field
+
+from k8s_models.definitions.discovery_k8s_io.endpoint_conditions import EndpointConditions
+from k8s_models.definitions.discovery_k8s_io.endpoint_hints import EndpointHints
+from k8s_models.definitions.core.object_reference import ObjectReference
 
 
 class Endpoint(BaseModel):

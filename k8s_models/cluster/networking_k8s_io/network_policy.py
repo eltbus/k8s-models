@@ -1,6 +1,8 @@
 from pydantic import Field
 
 from k8s_models.models import KubeModel
+from k8s_models.definitions.meta.object_meta import ObjectMeta
+from k8s_models.cluster.networking.network_policy_spec import NetworkPolicySpec
 
 
 class NetworkPolicy(KubeModel):

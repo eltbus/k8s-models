@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.node_config_source import NodeConfigSource
+
 
 class NodeConfigStatus(BaseModel):
     active: NodeConfigSource = Field(default=None, description=r""" Active reports the checkpointed config the node is actively using. Active will represent either the current version of the Assigned config, or the current LastKnownGood config, depending on whether attempting to use the Assigned config results in an error. """)

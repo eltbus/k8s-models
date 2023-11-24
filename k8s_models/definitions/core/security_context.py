@@ -1,5 +1,10 @@
 from pydantic import BaseModel, Field
 
+from k8s_models.definitions.core.capabilities import Capabilities
+from k8s_models.definitions.core.se_linux_options import SELinuxOptions
+from k8s_models.definitions.core.seccomp_profile import SeccompProfile
+from k8s_models.definitions.core.windows_security_context_options import WindowsSecurityContextOptions
+
 
 class SecurityContext(BaseModel):
     allowPrivilegeEscalation: bool = Field(default=None, description=r""" AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set when spec.os.name is windows. """)
