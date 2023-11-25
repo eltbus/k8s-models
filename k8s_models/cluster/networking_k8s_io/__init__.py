@@ -1,5 +1,5 @@
-from .ip_address import IPAddress
-from .network_policy import NetworkPolicy
+from _generated import IPAddress
+from _generated import NetworkPolicy
 
 __all__ = [
     "IPAddress",

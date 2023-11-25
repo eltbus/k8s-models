@@ -1,4 +1,4 @@
-from .priority_class import PriorityClass
+from _generated import PriorityClass
 
 __all__ = [
     "PriorityClass",

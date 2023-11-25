@@ -1,5 +1,5 @@
-from .flow_schema import FlowSchema
-from .priority_level_configuration import PriorityLevelConfiguration
+from _generated import FlowSchema
+from _generated import PriorityLevelConfiguration
 
 __all__ = [
     "FlowSchema",

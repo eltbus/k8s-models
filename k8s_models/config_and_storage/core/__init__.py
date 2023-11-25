@@ -1,15 +1,21 @@
-from .config_map import ConfigMap
-from .config_map_list import ConfigMapList
-from .persistent_volume_claim import PersistentVolumeClaim
-from .persistent_volume_claim_list import PersistentVolumeClaimList
-from .secret import Secret
-from .secret_list import SecretList
+from _generated import ConfigMap
+from _generated import ConfigMapList
+from _generated import Secret
+from _generated import SecretList
+from _generated import PersistentVolumeClaim
+from _generated import PersistentVolumeClaimSpec
+from _generated import PersistentVolumeClaimStatus
+from _generated import PersistentVolumeClaimList
+from _generated import Volume
 
 __all__ = [
     "ConfigMap",
     "ConfigMapList",
-    "PersistentVolumeClaim",
-    "PersistentVolumeClaimList",
     "Secret",
     "SecretList",
+    "PersistentVolumeClaim",
+    "PersistentVolumeClaimSpec",
+    "PersistentVolumeClaimStatus",
+    "PersistentVolumeClaimList",
+    "Volume",
 ]

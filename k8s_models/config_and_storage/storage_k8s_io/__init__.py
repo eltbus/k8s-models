@@ -1,13 +1,13 @@
-from .csi_driver import CSIDriver
-from .csi_node import CSINode
-from .csi_storage_capacity import CSIStorageCapacity
-from .storage_class import StorageClass
-from .volume_attachment import VolumeAttachment
+from _generated import CSIDriver
+from _generated import CSINode
+from _generated import StorageClass
+from _generated import CSIStorageCapacity
+from _generated import VolumeAttachment
 
 __all__ = [
     "CSIDriver",
     "CSINode",
-    "CSIStorageCapacity",
     "StorageClass",
+    "CSIStorageCapacity",
     "VolumeAttachment",
 ]

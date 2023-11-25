@@ -1,5 +1,4 @@
 # Import all KubeModels
-
 from .admissionregistration import (
     MutatingWebhookConfigurationList,
     ValidatingWebhookConfigurationList,

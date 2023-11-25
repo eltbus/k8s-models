@@ -5,7 +5,7 @@ from typing import List, Iterator, Optional
 import re
 
 from bs4 import BeautifulSoup, Tag
-from inflection import underscore
+# from inflection import underscore
 from pydantic import BaseModel, Field
 
 
@@ -255,64 +255,38 @@ class Resource(BaseModel):
         match_api_version = any(re.search("apiVersion", field) for field in fields)
         match_kind = any(re.search("kind", field) for field in fields)
         if match_api_version and match_kind:
-            head_lines = [
-                "from pydantic import Field\n",
-                "from k8s_models.models import KubeModel\n\n",
-                f"class {self.kind}(KubeModel):\n",
-            ]
+            head = f"class {self.kind}(KubeModel):\n"
         else:
-            head_lines = [
-                "from pydantic import BaseModel, Field\n\n",
-                f"class {self.kind}(BaseModel):\n",
-            ]
-        head = "\n".join(head_lines)
+            head = f"class {self.kind}(BaseModel):\n"
 
         # Calculate body
-        fields_with_indentation = [" " * 4 + field for field in fields]
-        if not fields_with_indentation:
+        if not fields:
             body = " " * 4 + "pass\n"
         else:
+            fields_with_indentation = [" " * 4 + field for field in fields]
             body = "\n".join(fields_with_indentation)
         return head + body
 
-    def create_module(self, root: Path, module_name: str):
-        module_path = root / module_name
-        submodule_name = self.group.replace(".", "_")
-        path = module_path / f"{submodule_name}.py"
-        if not path.parent.exists():
-            path.parent.mkdir(parents=True, exist_ok=True)
-        if not path.exists():
-            path.touch(exist_ok=True)
-        module_init_file_path = module_path / "__init__.py"
-        module_init_file_path.touch(exist_ok=True)
-        return path
+    @property
+    def submodule_name(self):
+        return self.group.replace(".", "_")
 
-    def touch_file(self, root: Path, module_name: str) -> Path:
-        module_path = root / module_name
-        submodule_path = module_path / self.group.replace(".", "_")
-        filepath = submodule_path / (underscore(self.kind) + ".py")
-        
-        # Create folder
-        if not filepath.parent.exists():
-            filepath.parent.mkdir(parents=True, exist_ok=True)
-        # Create __init__ files
-        module_init_file_path = module_path / "__init__.py"
-        module_init_file_path.touch(exist_ok=True)
+    def create_submodule(self, module_path: Path) -> Path:
+        # Create submodule folder
+        submodule_path = module_path / self.submodule_name
+        submodule_path.mkdir(parents=True, exist_ok=True)
+
+        # Init submodule
         submodule_init_file_path = submodule_path / "__init__.py"
         submodule_init_file_path.touch(exist_ok=True)
-        return filepath
 
-    def write_file(self, root: Path, module_name: str):
-        filepath = self.touch_file(root=root, module_name=module_name)
-        with open(filepath, "w") as f:
-            f.write(self.repr_as_pydantic_model())
-            f.write("\n")
+        return submodule_path
 
 
 class API(BaseModel):
     name: str
     description: str
-    resources: List = Field(default_factory=list)
+    resources: List[Resource] = Field(default_factory=list)
 
     @classmethod
     def from_api_tag(cls, tag: Tag) -> API:
@@ -362,6 +336,18 @@ class API(BaseModel):
     def module_name(self):
         return self.name.lower().replace(" ", "_").replace("&", "and")
 
+    def create_module(self, package_path: Path) -> Path:
+        # Create module folder
+        module_path = package_path / self.module_name
+        module_path.mkdir(parents=True, exist_ok=True)
+
+        # Init module
+        module_init_filepath = module_path / "__init__.py"
+        module_init_filepath.touch(exist_ok=True)
+
+        return module_path
+
+
 
 def gen_apis_from_kubernetes_docs(soup: BeautifulSoup) -> Iterator[API]:
     api_tags = soup.find_all("div", attrs={"id": lambda x: x and x.endswith("-apis")})
@@ -391,49 +377,27 @@ def load_soup():
     return BeautifulSoup(html_doc, "html.parser")
 
 
-def show():
-    soup = load_soup()
-    for api in gen_apis_from_kubernetes_docs(soup):
-        print(f"{api.name}")
-        for resource in api.resources:
-            print(f"\t{resource.kind}")
-            for parameter in resource.parameters:
-                print(f"\t\t{parameter.name}")
-            pass
-
-    print("definitions")
-    for definition in gen_definitions_from_kubernetes_docs(soup):
-        print(f"\t{definition.kind}")
-        for parameter in definition.parameters:
-            print(f"\t\t{parameter.name}")
-        pass
-
 def main():
-    """
-    Used to generate the "core" model definitions.
-    It does not add the related import files, nor can it handle missing classes in the documentation.
-    Generate, and manually resolve the issues, or, if previously generated, copy the imports.
-    """
-    soup = load_soup()
+    # Parse soup
+    soup: BeautifulSoup = load_soup()
 
-    root = Path(__file__).parent / "k8s_models_info"
-    root.mkdir(exist_ok=True)
-    package_init_file_path = root / "__init__.py"
+    # Create package
+    package_path = Path(__file__).parent / "k8s_models_info"
+    package_path.mkdir(exist_ok=True)
+
+    # Init package
+    package_init_file_path = package_path / "__init__.py"
     package_init_file_path.touch(exist_ok=True)
 
-    for api in gen_apis_from_kubernetes_docs(soup):
-        for resource in api.resources:
-            resource.write_file(root=root, module_name=api.module_name)
-
-    for definition in gen_definitions_from_kubernetes_docs(soup):
-        definition.write_file(root=root, module_name="definitions")
-
-    package_model_helper_file_path = root / "models.py"
-    with open(package_model_helper_file_path, "w") as f:
+    hidden_module_name = "_generated"
+    hidden_module = package_path / f"{hidden_module_name}.py"
+    with open(hidden_module, "w") as f:
         lines = [
-            "from pydantic import BaseModel\n",
-            "from yaml import safe_dump\n",
-            "class KubeModel(BaseModel):\n",
+            "from __future__ import annotations",
+            "from typing import Any, List\n",
+            "from pydantic import BaseModel, Field",
+            "from yaml import safe_dump\n\n",
+            "class KubeModel(BaseModel):",
             " " * 4 + "def model_to_yaml(self):",
             " " * 8 + "model_data = self.model_dump(by_alias=True, exclude_none=True)",
             " " * 8 + "return safe_dump(",
@@ -443,11 +407,86 @@ def main():
             " " * 12 + "indent=2,",
             " " * 12 + "allow_unicode=True,",
             " " * 12 + "explicit_start=True",
-            " " * 8 + ")",
+            " " * 8 + ")\n\n",
+            "ScaleSpec = Any",
+            "ScaleStatus = Any",
+            "PodResourceClaimStatus = Any\n\n",
         ]
         f.write("\n".join(lines))
 
+        resource = Resource.model_construct()
+
+        for api in gen_apis_from_kubernetes_docs(soup):
+            # Create module folder
+            module_path = api.create_module(package_path=package_path)
+            api_group_resource_dict = {}
+
+            for resource in api.resources:
+                # Create submodule
+                submodule_path = resource.create_submodule(module_path=module_path)
+                submodule_filepath = submodule_path / "__init__.py"
+
+                # Store information to generate __init__ file imports
+                (
+                    api_group_resource_dict
+                    .setdefault(submodule_filepath, [])
+                    .append(resource.kind)
+                )
+
+                # Generate resource code and write it 
+                f.write(f"\n{resource.repr_as_pydantic_model()}\n\n")
+            else:
+                # Generate __init__ file imports
+                for submodule_filepath, resource_kinds in api_group_resource_dict.items():
+                    with open(submodule_filepath, "w") as g:
+                        # Write imports
+                        for resource_kind in resource_kinds:
+                            g.write(f"from {hidden_module_name} import {resource_kind}\n")
+
+                        # Write __all__ variable
+                        g.write(f"\n__all__ = [\n")
+                        for resource_kind in resource_kinds:
+                            g.write(f'    "{resource_kind}",\n')
+                        g.write(f"]")
+
+        # Create module folder
+        module_path = package_path / "definitions"
+        module_path.mkdir(parents=True, exist_ok=True)
+
+        # Init module
+        module_init_filepath = module_path / "__init__.py"
+        module_init_filepath.touch(exist_ok=True)
+
+        submodule_filepath = Path("")
+        api_group_resource_dict = {}
+
+        for definition in gen_definitions_from_kubernetes_docs(soup):
+            # Create submodule
+            submodule_path = definition.create_submodule(module_path=module_path)
+            submodule_filepath = submodule_path / "__init__.py"
+
+            # Store information to generate __init__ file imports
+            (
+                api_group_resource_dict
+                .setdefault(submodule_filepath, [])
+                .append(definition.kind)
+            )
+
+            # Generate resource code and write it 
+            f.write(f"\n{definition.repr_as_pydantic_model()}\n\n")
+        else:
+            # # Generate __init__ file imports
+            for submodule_filepath, resource_kinds in api_group_resource_dict.items():
+                with open(submodule_filepath, "w") as g:
+                    # Write imports
+                    for resource_kind in resource_kinds:
+                        g.write(f"from {hidden_module_name} import {resource_kind}\n")
+
+                    # Write __all__ variable
+                    g.write(f"\n__all__ = [\n")
+                    for resource_kind in resource_kinds:
+                        g.write(f'    "{resource_kind}",\n')
+                    g.write(f"]")
 
 if __name__ == "__main__":
     main()
-    # show()

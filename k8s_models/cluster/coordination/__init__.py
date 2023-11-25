@@ -1,5 +1,7 @@
-from .lease_list import LeaseList
+from _generated import LeaseSpec
+from _generated import LeaseList
 
 __all__ = [
+    "LeaseSpec",
     "LeaseList",
 ]

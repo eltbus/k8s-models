@@ -1,11 +1,15 @@
-from .limit_range import LimitRange
-from .limit_range_list import LimitRangeList
-from .pod_template import PodTemplate
-from .pod_template_list import PodTemplateList
+from _generated import LimitRange
+from _generated import LimitRangeSpec
+from _generated import LimitRangeList
+from _generated import PodTemplate
+from _generated import PodTemplateSpec
+from _generated import PodTemplateList
 
 __all__ = [
     "LimitRange",
+    "LimitRangeSpec",
     "LimitRangeList",
     "PodTemplate",
+    "PodTemplateSpec",
     "PodTemplateList",
 ]

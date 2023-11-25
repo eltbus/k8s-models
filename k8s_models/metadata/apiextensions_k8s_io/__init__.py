@@ -1,4 +1,4 @@
-from .custom_resource_definition import CustomResourceDefinition
+from _generated import CustomResourceDefinition
 
 __all__ = [
     "CustomResourceDefinition",

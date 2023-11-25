@@ -1,29 +1,44 @@
-from .binding import Binding
-from .component_status import ComponentStatus
-from .component_status_list import ComponentStatusList
-from .namespace import Namespace
-from .namespace_list import NamespaceList
-from .node import Node
-from .node_list import NodeList
-from .persistent_volume import PersistentVolume
-from .persistent_volume_list import PersistentVolumeList
-from .resource_quota import ResourceQuota
-from .resource_quota_list import ResourceQuotaList
-from .service_account import ServiceAccount
-from .service_account_list import ServiceAccountList
-
+from _generated import Binding
+from _generated import ComponentStatus
+from _generated import ComponentStatusList
+from _generated import Namespace
+from _generated import NamespaceSpec
+from _generated import NamespaceStatus
+from _generated import NamespaceList
+from _generated import Node
+from _generated import NodeSpec
+from _generated import NodeStatus
+from _generated import NodeList
+from _generated import PersistentVolume
+from _generated import PersistentVolumeSpec
+from _generated import PersistentVolumeStatus
+from _generated import PersistentVolumeList
+from _generated import ResourceQuota
+from _generated import ResourceQuotaSpec
+from _generated import ResourceQuotaStatus
+from _generated import ResourceQuotaList
+from _generated import ServiceAccount
+from _generated import ServiceAccountList
 
 __all__ = [
     "Binding",
     "ComponentStatus",
     "ComponentStatusList",
     "Namespace",
+    "NamespaceSpec",
+    "NamespaceStatus",
     "NamespaceList",
     "Node",
+    "NodeSpec",
+    "NodeStatus",
     "NodeList",
     "PersistentVolume",
+    "PersistentVolumeSpec",
+    "PersistentVolumeStatus",
     "PersistentVolumeList",
     "ResourceQuota",
+    "ResourceQuotaSpec",
+    "ResourceQuotaStatus",
     "ResourceQuotaList",
     "ServiceAccount",
     "ServiceAccountList",

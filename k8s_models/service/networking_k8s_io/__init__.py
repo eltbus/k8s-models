@@ -1,6 +1,6 @@
-from .cluster_cidr import ClusterCIDR
-from .ingress import Ingress
-from .ingress_class import IngressClass
+from _generated import ClusterCIDR
+from _generated import Ingress
+from _generated import IngressClass
 
 __all__ = [
     "ClusterCIDR",

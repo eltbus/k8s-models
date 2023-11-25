@@ -1,5 +1,4 @@
 # Import all KubeModels
-
 from .admissionregistration_k8s_io import ParamKind
 from .authentication_k8s_io import BoundObjectReference
 from .autoscaling import (

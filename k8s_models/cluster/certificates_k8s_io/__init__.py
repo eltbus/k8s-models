@@ -1,4 +1,4 @@
-from .certificate_signing_request import CertificateSigningRequest
+from _generated import CertificateSigningRequest
 
 __all__ = [
     "CertificateSigningRequest",

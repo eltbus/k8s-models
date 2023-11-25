@@ -1,6 +1,6 @@
-from .self_subject_review import SelfSubjectReview
-from .token_request import TokenRequest
-from .token_review import TokenReview
+from _generated import SelfSubjectReview
+from _generated import TokenRequest
+from _generated import TokenReview
 
 __all__ = [
     "SelfSubjectReview",

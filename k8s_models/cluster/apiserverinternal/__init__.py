@@ -1,5 +1,9 @@
-from .storage_version_list import StorageVersionList
+from _generated import StorageVersionSpec
+from _generated import StorageVersionStatus
+from _generated import StorageVersionList
 
 __all__ = [
+    "StorageVersionSpec",
+    "StorageVersionStatus",
     "StorageVersionList",
 ]

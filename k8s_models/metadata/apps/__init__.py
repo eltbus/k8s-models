@@ -1,5 +1,5 @@
-from .controller_revision import ControllerRevision
-from .controller_revision_list import ControllerRevisionList
+from _generated import ControllerRevision
+from _generated import ControllerRevisionList
 
 __all__ = [
     "ControllerRevision",

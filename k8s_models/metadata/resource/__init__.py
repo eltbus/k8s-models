@@ -1,11 +1,21 @@
-from .pod_scheduling_context_list import PodSchedulingContextList
-from .resource_claim_list import ResourceClaimList
-from .resource_claim_template_list import ResourceClaimTemplateList
-from .resource_class_list import ResourceClassList
+from _generated import PodSchedulingContextSpec
+from _generated import PodSchedulingContextStatus
+from _generated import PodSchedulingContextList
+from _generated import ResourceClaimSpec
+from _generated import ResourceClaimStatus
+from _generated import ResourceClaimList
+from _generated import ResourceClaimTemplateSpec
+from _generated import ResourceClaimTemplateList
+from _generated import ResourceClassList
 
 __all__ = [
+    "PodSchedulingContextSpec",
+    "PodSchedulingContextStatus",
     "PodSchedulingContextList",
+    "ResourceClaimSpec",
+    "ResourceClaimStatus",
     "ResourceClaimList",
+    "ResourceClaimTemplateSpec",
     "ResourceClaimTemplateList",
     "ResourceClassList",
 ]

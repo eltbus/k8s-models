@@ -1,4 +1,4 @@
-from .storage_version import StorageVersion
+from _generated import StorageVersion
 
 __all__ = [
     "StorageVersion",

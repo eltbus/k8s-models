@@ -1,7 +1,7 @@
-from .local_subject_access_review import LocalSubjectAccessReview
-from .self_subject_access_review import SelfSubjectAccessReview
-from .self_subject_rules_review import SelfSubjectRulesReview
-from .subject_access_review import SubjectAccessReview
+from _generated import LocalSubjectAccessReview
+from _generated import SelfSubjectAccessReview
+from _generated import SelfSubjectRulesReview
+from _generated import SubjectAccessReview
 
 __all__ = [
     "LocalSubjectAccessReview",

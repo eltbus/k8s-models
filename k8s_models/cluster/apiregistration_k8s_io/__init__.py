@@ -1,3 +1,5 @@
-from .api_service import APIService
+from _generated import APIService
 
-__all__ = ["APIService"]
+__all__ = [
+    "APIService",
+]

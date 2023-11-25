@@ -1,11 +1,11 @@
-from .mutating_webhook_configuration import MutatingWebhookConfiguration
-from .validating_admission_policy import ValidatingAdmissionPolicy
-from .validating_admission_policy_binding import ValidatingAdmissionPolicyBinding
-from .validating_webhook_configuration import ValidatingWebhookConfiguration
+from _generated import MutatingWebhookConfiguration
+from _generated import ValidatingWebhookConfiguration
+from _generated import ValidatingAdmissionPolicy
+from _generated import ValidatingAdmissionPolicyBinding
 
 __all__ = [
     "MutatingWebhookConfiguration",
+    "ValidatingWebhookConfiguration",
     "ValidatingAdmissionPolicy",
     "ValidatingAdmissionPolicyBinding",
-    "ValidatingWebhookConfiguration",
 ]

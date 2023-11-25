@@ -1,7 +1,11 @@
-from .pod_disruption_budget import PodDisruptionBudget
-from .pod_disruption_budget_list import PodDisruptionBudgetList
+from _generated import PodDisruptionBudget
+from _generated import PodDisruptionBudgetSpec
+from _generated import PodDisruptionBudgetStatus
+from _generated import PodDisruptionBudgetList
 
 __all__ = [
     "PodDisruptionBudget",
+    "PodDisruptionBudgetSpec",
+    "PodDisruptionBudgetStatus",
     "PodDisruptionBudgetList",
 ]

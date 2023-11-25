@@ -1,13 +1,21 @@
-from .csi_driver_list import CSIDriverList
-from .csi_node_list import CSINodeList
-from .csi_storage_capacity_list import CSIStorageCapacityList
-from .storage_class_list import StorageClassList
-from .volume_attachment_list import VolumeAttachmentList
+from _generated import CSIDriverSpec
+from _generated import CSIDriverList
+from _generated import CSINodeSpec
+from _generated import CSINodeList
+from _generated import StorageClassList
+from _generated import CSIStorageCapacityList
+from _generated import VolumeAttachmentSpec
+from _generated import VolumeAttachmentStatus
+from _generated import VolumeAttachmentList
 
 __all__ = [
+    "CSIDriverSpec",
     "CSIDriverList",
+    "CSINodeSpec",
     "CSINodeList",
-    "CSIStorageCapacityList",
     "StorageClassList",
+    "CSIStorageCapacityList",
+    "VolumeAttachmentSpec",
+    "VolumeAttachmentStatus",
     "VolumeAttachmentList",
 ]

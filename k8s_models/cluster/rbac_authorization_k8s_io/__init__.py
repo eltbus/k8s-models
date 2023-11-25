@@ -1,7 +1,7 @@
-from .cluster_role import ClusterRole
-from .cluster_role_binding import ClusterRoleBinding
-from .role import Role
-from .role_binding import  RoleBinding
+from _generated import ClusterRole
+from _generated import ClusterRoleBinding
+from _generated import Role
+from _generated import RoleBinding
 
 __all__ = [
     "ClusterRole",

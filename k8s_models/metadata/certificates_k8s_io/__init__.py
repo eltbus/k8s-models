@@ -1,4 +1,4 @@
-from .cluster_trust_bundle import ClusterTrustBundle
+from _generated import ClusterTrustBundle
 
 __all__ = [
     "ClusterTrustBundle",

@@ -1,9 +1,17 @@
-from .cluster_cidr_list import ClusterCIDRList
-from .ingress_class_list import IngressClassList
-from .ingress_list import IngressList
+from _generated import ClusterCIDRSpec
+from _generated import ClusterCIDRList
+from _generated import IngressSpec
+from _generated import IngressStatus
+from _generated import IngressList
+from _generated import IngressClassSpec
+from _generated import IngressClassList
 
 __all__ = [
+    "ClusterCIDRSpec",
     "ClusterCIDRList",
-    "IngressClassList",
+    "IngressSpec",
+    "IngressStatus",
     "IngressList",
+    "IngressClassSpec",
+    "IngressClassList",
 ]

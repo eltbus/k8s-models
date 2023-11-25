@@ -1,4 +1,4 @@
-from .endpoint_slice import EndpointSlice
+from _generated import EndpointSlice
 
 __all__ = [
     "EndpointSlice",

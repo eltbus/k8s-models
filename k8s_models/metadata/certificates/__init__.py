@@ -1,5 +1,7 @@
-from .cluster_trust_bundle_list import ClusterTrustBundleList
+from _generated import ClusterTrustBundleSpec
+from _generated import ClusterTrustBundleList
 
 __all__ = [
+    "ClusterTrustBundleSpec",
     "ClusterTrustBundleList",
 ]

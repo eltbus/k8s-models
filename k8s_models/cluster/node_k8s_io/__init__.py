@@ -1,4 +1,4 @@
-from .runtime_class import RuntimeClass
+from _generated import RuntimeClass
 
 __all__ = [
     "RuntimeClass",
