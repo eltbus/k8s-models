@@ -1,5 +1,4 @@
 # Import all KubeModels
-
 from .apiregistration import APIServiceList
 from .apiregistration_k8s_io import APIService
 from .apiserverinternal import StorageVersionList
@@ -63,10 +62,6 @@ from .rbac_authorization_k8s_io import (
     Role,
     RoleBinding,
 )
-
-# Submodules without KubeModels:
-# from .authentication import * # NOTE: no KubeModels found
-# from .authorization import * # NOTE: no KubeModels found
 
 __all__ = [
     "APIServiceList",
