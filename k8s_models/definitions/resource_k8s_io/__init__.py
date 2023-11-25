@@ -1,9 +1,9 @@
-from _generated import AllocationResult
-from _generated import ResourceClaimConsumerReference
-from _generated import ResourceClaimParametersReference
-from _generated import ResourceClaimSchedulingStatus
-from _generated import ResourceClassParametersReference
-from _generated import ResourceHandle
+from k8s_models._generated import AllocationResult
+from k8s_models._generated import ResourceClaimConsumerReference
+from k8s_models._generated import ResourceClaimParametersReference
+from k8s_models._generated import ResourceClaimSchedulingStatus
+from k8s_models._generated import ResourceClassParametersReference
+from k8s_models._generated import ResourceHandle
 
 __all__ = [
     "AllocationResult",

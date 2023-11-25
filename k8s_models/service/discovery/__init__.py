@@ -1,4 +1,4 @@
-from _generated import EndpointSliceList
+from k8s_models._generated import EndpointSliceList
 
 __all__ = [
     "EndpointSliceList",

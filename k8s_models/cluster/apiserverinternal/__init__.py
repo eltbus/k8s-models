@@ -1,6 +1,6 @@
-from _generated import StorageVersionSpec
-from _generated import StorageVersionStatus
-from _generated import StorageVersionList
+from k8s_models._generated import StorageVersionSpec
+from k8s_models._generated import StorageVersionStatus
+from k8s_models._generated import StorageVersionList
 
 __all__ = [
     "StorageVersionSpec",

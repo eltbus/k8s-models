@@ -1,7 +1,7 @@
-from _generated import Endpoint
-from _generated import EndpointConditions
-from _generated import EndpointHints
-from _generated import ForZone
+from k8s_models._generated import Endpoint
+from k8s_models._generated import EndpointConditions
+from k8s_models._generated import EndpointHints
+from k8s_models._generated import ForZone
 
 __all__ = [
     "Endpoint",

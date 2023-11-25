@@ -1,18 +1,18 @@
-from _generated import ExemptPriorityLevelConfiguration
-from _generated import FlowDistinguisherMethod
-from _generated import FlowSchemaCondition
-from _generated import GroupSubject
-from _generated import LimitResponse
-from _generated import LimitedPriorityLevelConfiguration
-from _generated import NonResourcePolicyRule
-from _generated import PolicyRulesWithSubjects
-from _generated import PriorityLevelConfigurationCondition
-from _generated import PriorityLevelConfigurationReference
-from _generated import QueuingConfiguration
-from _generated import ResourcePolicyRule
-from _generated import ServiceAccountSubject
-from _generated import Subject
-from _generated import UserSubject
+from k8s_models._generated import ExemptPriorityLevelConfiguration
+from k8s_models._generated import FlowDistinguisherMethod
+from k8s_models._generated import FlowSchemaCondition
+from k8s_models._generated import GroupSubject
+from k8s_models._generated import LimitResponse
+from k8s_models._generated import LimitedPriorityLevelConfiguration
+from k8s_models._generated import NonResourcePolicyRule
+from k8s_models._generated import PolicyRulesWithSubjects
+from k8s_models._generated import PriorityLevelConfigurationCondition
+from k8s_models._generated import PriorityLevelConfigurationReference
+from k8s_models._generated import QueuingConfiguration
+from k8s_models._generated import ResourcePolicyRule
+from k8s_models._generated import ServiceAccountSubject
+from k8s_models._generated import Subject
+from k8s_models._generated import UserSubject
 
 __all__ = [
     "ExemptPriorityLevelConfiguration",

@@ -1,6 +1,6 @@
-from _generated import ClusterCIDR
-from _generated import Ingress
-from _generated import IngressClass
+from k8s_models._generated import ClusterCIDR
+from k8s_models._generated import Ingress
+from k8s_models._generated import IngressClass
 
 __all__ = [
     "ClusterCIDR",

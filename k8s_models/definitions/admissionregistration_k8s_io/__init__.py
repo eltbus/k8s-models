@@ -1,18 +1,18 @@
-from _generated import AuditAnnotation
-from _generated import ExpressionWarning
-from _generated import MatchCondition
-from _generated import MatchResources
-from _generated import MutatingWebhook
-from _generated import NamedRuleWithOperations
-from _generated import ParamKind
-from _generated import ParamRef
-from _generated import RuleWithOperations
-from _generated import ServiceReference
-from _generated import TypeChecking
-from _generated import ValidatingWebhook
-from _generated import Validation
-from _generated import Variable
-from _generated import WebhookClientConfig
+from k8s_models._generated import AuditAnnotation
+from k8s_models._generated import ExpressionWarning
+from k8s_models._generated import MatchCondition
+from k8s_models._generated import MatchResources
+from k8s_models._generated import MutatingWebhook
+from k8s_models._generated import NamedRuleWithOperations
+from k8s_models._generated import ParamKind
+from k8s_models._generated import ParamRef
+from k8s_models._generated import RuleWithOperations
+from k8s_models._generated import ServiceReference
+from k8s_models._generated import TypeChecking
+from k8s_models._generated import ValidatingWebhook
+from k8s_models._generated import Validation
+from k8s_models._generated import Variable
+from k8s_models._generated import WebhookClientConfig
 
 __all__ = [
     "AuditAnnotation",

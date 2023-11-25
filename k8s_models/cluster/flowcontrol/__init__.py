@@ -1,9 +1,9 @@
-from _generated import FlowSchemaSpec
-from _generated import FlowSchemaStatus
-from _generated import FlowSchemaList
-from _generated import PriorityLevelConfigurationSpec
-from _generated import PriorityLevelConfigurationStatus
-from _generated import PriorityLevelConfigurationList
+from k8s_models._generated import FlowSchemaSpec
+from k8s_models._generated import FlowSchemaStatus
+from k8s_models._generated import FlowSchemaList
+from k8s_models._generated import PriorityLevelConfigurationSpec
+from k8s_models._generated import PriorityLevelConfigurationStatus
+from k8s_models._generated import PriorityLevelConfigurationList
 
 __all__ = [
     "FlowSchemaSpec",

@@ -1,5 +1,5 @@
-from _generated import Overhead
-from _generated import Scheduling
+from k8s_models._generated import Overhead
+from k8s_models._generated import Scheduling
 
 __all__ = [
     "Overhead",

@@ -1,11 +1,11 @@
-from _generated import CronJob
-from _generated import CronJobSpec
-from _generated import CronJobStatus
-from _generated import CronJobList
-from _generated import Job
-from _generated import JobSpec
-from _generated import JobStatus
-from _generated import JobList
+from k8s_models._generated import CronJob
+from k8s_models._generated import CronJobSpec
+from k8s_models._generated import CronJobStatus
+from k8s_models._generated import CronJobList
+from k8s_models._generated import Job
+from k8s_models._generated import JobSpec
+from k8s_models._generated import JobStatus
+from k8s_models._generated import JobList
 
 __all__ = [
     "CronJob",

@@ -1,4 +1,4 @@
-from _generated import StorageVersion
+from k8s_models._generated import StorageVersion
 
 __all__ = [
     "StorageVersion",

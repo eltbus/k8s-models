@@ -1,4 +1,4 @@
-from _generated import CertificateSigningRequestCondition
+from k8s_models._generated import CertificateSigningRequestCondition
 
 __all__ = [
     "CertificateSigningRequestCondition",

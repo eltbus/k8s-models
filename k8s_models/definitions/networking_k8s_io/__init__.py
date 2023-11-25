@@ -1,20 +1,20 @@
-from _generated import HTTPIngressPath
-from _generated import HTTPIngressRuleValue
-from _generated import IPBlock
-from _generated import IngressBackend
-from _generated import IngressClassParametersReference
-from _generated import IngressLoadBalancerIngress
-from _generated import IngressLoadBalancerStatus
-from _generated import IngressPortStatus
-from _generated import IngressRule
-from _generated import IngressServiceBackend
-from _generated import IngressTLS
-from _generated import NetworkPolicyEgressRule
-from _generated import NetworkPolicyIngressRule
-from _generated import NetworkPolicyPeer
-from _generated import NetworkPolicyPort
-from _generated import ParentReference
-from _generated import ServiceBackendPort
+from k8s_models._generated import HTTPIngressPath
+from k8s_models._generated import HTTPIngressRuleValue
+from k8s_models._generated import IPBlock
+from k8s_models._generated import IngressBackend
+from k8s_models._generated import IngressClassParametersReference
+from k8s_models._generated import IngressLoadBalancerIngress
+from k8s_models._generated import IngressLoadBalancerStatus
+from k8s_models._generated import IngressPortStatus
+from k8s_models._generated import IngressRule
+from k8s_models._generated import IngressServiceBackend
+from k8s_models._generated import IngressTLS
+from k8s_models._generated import NetworkPolicyEgressRule
+from k8s_models._generated import NetworkPolicyIngressRule
+from k8s_models._generated import NetworkPolicyPeer
+from k8s_models._generated import NetworkPolicyPort
+from k8s_models._generated import ParentReference
+from k8s_models._generated import ServiceBackendPort
 
 __all__ = [
     "HTTPIngressPath",

@@ -1,10 +1,10 @@
-from _generated import JobCondition
-from _generated import JobTemplateSpec
-from _generated import PodFailurePolicy
-from _generated import PodFailurePolicyOnExitCodesRequirement
-from _generated import PodFailurePolicyOnPodConditionsPattern
-from _generated import PodFailurePolicyRule
-from _generated import UncountedTerminatedPods
+from k8s_models._generated import JobCondition
+from k8s_models._generated import JobTemplateSpec
+from k8s_models._generated import PodFailurePolicy
+from k8s_models._generated import PodFailurePolicyOnExitCodesRequirement
+from k8s_models._generated import PodFailurePolicyOnPodConditionsPattern
+from k8s_models._generated import PodFailurePolicyRule
+from k8s_models._generated import UncountedTerminatedPods
 
 __all__ = [
     "JobCondition",

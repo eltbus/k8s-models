@@ -1,9 +1,9 @@
-from _generated import LimitRange
-from _generated import LimitRangeSpec
-from _generated import LimitRangeList
-from _generated import PodTemplate
-from _generated import PodTemplateSpec
-from _generated import PodTemplateList
+from k8s_models._generated import LimitRange
+from k8s_models._generated import LimitRangeSpec
+from k8s_models._generated import LimitRangeList
+from k8s_models._generated import PodTemplate
+from k8s_models._generated import PodTemplateSpec
+from k8s_models._generated import PodTemplateList
 
 __all__ = [
     "LimitRange",

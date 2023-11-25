@@ -382,7 +382,7 @@ def main():
     soup: BeautifulSoup = load_soup()
 
     # Create package
-    package_path = Path(__file__).parent / "k8s_models_info"
+    package_path = Path(__file__).parent / "k8s_models"
     package_path.mkdir(exist_ok=True)
 
     # Init package
@@ -441,7 +441,7 @@ def main():
                     with open(submodule_filepath, "w") as g:
                         # Write imports
                         for resource_kind in resource_kinds:
-                            g.write(f"from {hidden_module_name} import {resource_kind}\n")
+                            g.write(f"from k8s_models.{hidden_module_name} import {resource_kind}\n")
 
                         # Write __all__ variable
                         g.write(f"\n__all__ = [\n")
@@ -480,7 +480,7 @@ def main():
                 with open(submodule_filepath, "w") as g:
                     # Write imports
                     for resource_kind in resource_kinds:
-                        g.write(f"from {hidden_module_name} import {resource_kind}\n")
+                        g.write(f"from k8s_models.{hidden_module_name} import {resource_kind}\n")
 
                     # Write __all__ variable
                     g.write(f"\n__all__ = [\n")

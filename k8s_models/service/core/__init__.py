@@ -1,9 +1,9 @@
-from _generated import Endpoints
-from _generated import EndpointsList
-from _generated import Service
-from _generated import ServiceSpec
-from _generated import ServiceStatus
-from _generated import ServiceList
+from k8s_models._generated import Endpoints
+from k8s_models._generated import EndpointsList
+from k8s_models._generated import Service
+from k8s_models._generated import ServiceSpec
+from k8s_models._generated import ServiceStatus
+from k8s_models._generated import ServiceList
 
 __all__ = [
     "Endpoints",

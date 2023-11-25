@@ -1,5 +1,5 @@
-from _generated import ServerStorageVersion
-from _generated import StorageVersionCondition
+from k8s_models._generated import ServerStorageVersion
+from k8s_models._generated import StorageVersionCondition
 
 __all__ = [
     "ServerStorageVersion",

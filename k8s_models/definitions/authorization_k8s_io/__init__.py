@@ -1,8 +1,8 @@
-from _generated import NonResourceAttributes
-from _generated import NonResourceRule
-from _generated import ResourceAttributes
-from _generated import ResourceRule
-from _generated import SubjectRulesReviewStatus
+from k8s_models._generated import NonResourceAttributes
+from k8s_models._generated import NonResourceRule
+from k8s_models._generated import ResourceAttributes
+from k8s_models._generated import ResourceRule
+from k8s_models._generated import SubjectRulesReviewStatus
 
 __all__ = [
     "NonResourceAttributes",

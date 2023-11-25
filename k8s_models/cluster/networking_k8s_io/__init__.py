@@ -1,5 +1,5 @@
-from _generated import IPAddress
-from _generated import NetworkPolicy
+from k8s_models._generated import IPAddress
+from k8s_models._generated import NetworkPolicy
 
 __all__ = [
     "IPAddress",

@@ -1,7 +1,7 @@
-from _generated import PodSchedulingContext
-from _generated import ResourceClaim
-from _generated import ResourceClaimTemplate
-from _generated import ResourceClass
+from k8s_models._generated import PodSchedulingContext
+from k8s_models._generated import ResourceClaim
+from k8s_models._generated import ResourceClaimTemplate
+from k8s_models._generated import ResourceClass
 
 __all__ = [
     "PodSchedulingContext",

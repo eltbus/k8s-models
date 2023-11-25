@@ -1,7 +1,7 @@
-from _generated import CSINodeDriver
-from _generated import VolumeAttachmentSource
-from _generated import VolumeError
-from _generated import VolumeNodeResources
+from k8s_models._generated import CSINodeDriver
+from k8s_models._generated import VolumeAttachmentSource
+from k8s_models._generated import VolumeError
+from k8s_models._generated import VolumeNodeResources
 
 __all__ = [
     "CSINodeDriver",

@@ -1,12 +1,12 @@
-from _generated import CSIDriverSpec
-from _generated import CSIDriverList
-from _generated import CSINodeSpec
-from _generated import CSINodeList
-from _generated import StorageClassList
-from _generated import CSIStorageCapacityList
-from _generated import VolumeAttachmentSpec
-from _generated import VolumeAttachmentStatus
-from _generated import VolumeAttachmentList
+from k8s_models._generated import CSIDriverSpec
+from k8s_models._generated import CSIDriverList
+from k8s_models._generated import CSINodeSpec
+from k8s_models._generated import CSINodeList
+from k8s_models._generated import StorageClassList
+from k8s_models._generated import CSIStorageCapacityList
+from k8s_models._generated import VolumeAttachmentSpec
+from k8s_models._generated import VolumeAttachmentStatus
+from k8s_models._generated import VolumeAttachmentList
 
 __all__ = [
     "CSIDriverSpec",

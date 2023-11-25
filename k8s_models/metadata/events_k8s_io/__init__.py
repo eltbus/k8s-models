@@ -1,4 +1,4 @@
-from _generated import Event
+from k8s_models._generated import Event
 
 __all__ = [
     "Event",

@@ -1,7 +1,7 @@
-from _generated import ClusterRole
-from _generated import ClusterRoleBinding
-from _generated import Role
-from _generated import RoleBinding
+from k8s_models._generated import ClusterRole
+from k8s_models._generated import ClusterRoleBinding
+from k8s_models._generated import Role
+from k8s_models._generated import RoleBinding
 
 __all__ = [
     "ClusterRole",
