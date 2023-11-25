@@ -1,13 +1,14 @@
+from __future__ import annotations
+
 from typing import List
 
 from pydantic import Field
 
 from k8s_models.models import KubeModel
-from k8s_models.definitions.apiextensions_k8s_io.json_schema_props_or_bool import JSONSchemaPropsOrBool
-from k8s_models.definitions.apiextensions_k8s_io.json_schema_props import JSONSchemaProps
 from k8s_models.definitions.apiextensions_k8s_io.json import JSON
 from k8s_models.definitions.apiextensions_k8s_io.external_documentation import ExternalDocumentation
 from k8s_models.definitions.apiextensions_k8s_io.json_schema_props_or_array import JSONSchemaPropsOrArray
+from k8s_models.definitions.apiextensions_k8s_io.json_schema_props_or_bool import JSONSchemaPropsOrBool
 from k8s_models.definitions.apiextensions_k8s_io.validation_rule import ValidationRule
 
 
